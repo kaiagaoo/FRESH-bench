@@ -5,6 +5,8 @@ Usage:
     python diff_classifier.py                          # demo on Andrej Karpathy
     python diff_classifier.py <entity_dir>             # compare first two snapshots
     python diff_classifier.py <old.json> <new.json>    # compare two specific files
+    python diff_classifier.py --batch-all              # export all entities to changes_full.jsonl
+    python diff_classifier.py --batch-all out.jsonl    # export to custom path
 """
 
 from __future__ import annotations
@@ -155,6 +157,21 @@ def _strip_wiki_markup(text: str) -> str:
     return text.strip()
 
 
+def _normalize_for_comparison(text: str) -> str:
+    """Aggressively normalize text for cosmetic-change detection."""
+    text = _strip_wiki_markup(text)
+    # Normalize all quote variants to ASCII
+    text = re.sub(r'[\u2018\u2019\u201A\u201B\u2032\u0060\u00B4]', "'", text)
+    text = re.sub(r'[\u201C\u201D\u201E\u201F\u2033\u00AB\u00BB\u2039\u203A]', '"', text)
+    # Normalize dashes
+    text = re.sub(r'[\u2013\u2014\u2015]', '-', text)
+    # Strip punctuation entirely for word-level comparison
+    text = re.sub(r"[^\w\s]", " ", text)
+    # Collapse whitespace
+    text = re.sub(r"\s+", " ", text).strip().lower()
+    return text
+
+
 def _numbers_differ(old: str, new: str) -> bool:
     """Return True when the two strings differ only (or primarily) in numeric values."""
     old_nums = _extract_numbers(old)
@@ -176,12 +193,79 @@ def _same_infobox_key(old_line: str, new_line: str) -> bool:
 
 def _is_wording_only(old_lines: list[str], new_lines: list[str]) -> bool:
     """
-    Return True when the stripped/de-marked text carries the same information.
-    Conservative: only fires when the stripped content is identical.
+    Return True when the change is cosmetic — same factual content with only
+    wording, punctuation, or formatting differences.
+
+    Uses two checks:
+    1. After aggressive normalization (strip punctuation, quotes, markup),
+       if the word sequences are identical → cosmetic.
+    2. If the word-level overlap is >= 90% (Jaccard) and the only differences
+       are common filler/function words → cosmetic.
     """
-    old_text = " ".join(_strip_wiki_markup(l) for l in old_lines).lower().split()
-    new_text = " ".join(_strip_wiki_markup(l) for l in new_lines).lower().split()
-    return set(old_text) == set(new_text) and len(old_text) > 0
+    old_norm = _normalize_for_comparison(" ".join(old_lines))
+    new_norm = _normalize_for_comparison(" ".join(new_lines))
+
+    if not old_norm and not new_norm:
+        return True
+    if not old_norm or not new_norm:
+        return False   # one side empty = real addition/deletion
+
+    # Check 1: identical after normalization
+    if old_norm == new_norm:
+        return True
+
+    # Check 2: high token overlap — catches minor wording tweaks
+    old_words = old_norm.split()
+    new_words = new_norm.split()
+    old_set = set(old_words)
+    new_set = set(new_words)
+
+    if not old_set or not new_set:
+        return False
+
+    intersection = old_set & new_set
+    union = old_set | new_set
+    jaccard = len(intersection) / len(union)
+
+    if jaccard < 0.85:
+        return False
+
+    # The differing words must all be function/filler words
+    _FILLER = {
+        "a", "an", "the", "of", "to", "in", "for", "on", "at", "by",
+        "and", "or", "is", "was", "are", "were", "be", "been", "being",
+        "has", "have", "had", "do", "does", "did", "will", "would",
+        "shall", "should", "may", "might", "can", "could",
+        "that", "which", "who", "whom", "whose", "this", "these",
+        "it", "its", "as", "with", "from", "into", "also", "but",
+        "not", "no", "so", "if", "then", "than", "both", "each",
+        "serve", "served", "serving", "current", "currently",
+        "continue", "continued", "continues", "continuing",
+    }
+    diff_words = (old_set ^ new_set)  # symmetric difference
+    non_filler_diff = diff_words - _FILLER
+    if not non_filler_diff:
+        return True
+
+    # Even with some non-filler diffs, if Jaccard >= 0.95 and numbers
+    # are the same, it's very likely cosmetic
+    if jaccard >= 0.95:
+        old_nums = _extract_numbers(" ".join(old_lines))
+        new_nums = _extract_numbers(" ".join(new_lines))
+        if old_nums == new_nums:
+            return True
+
+    # For long texts where a few words were dropped/added but all facts
+    # (names, numbers, dates) are preserved: check Jaccard similarity.
+    # This catches e.g. "continued to serve as ... until current chair X"
+    # → "continued as ... until X" where most content is identical.
+    if len(old_words) >= 10 and len(new_words) >= 10 and jaccard >= 0.90:
+        old_nums = _extract_numbers(" ".join(old_lines))
+        new_nums = _extract_numbers(" ".join(new_lines))
+        if old_nums == new_nums:
+            return True
+
+    return False
 
 
 # ---------------------------------------------------------------------------
@@ -339,7 +423,7 @@ def build_change_record(
 ) -> dict | None:
     """
     Build a full change record in the benchmark schema.
-    Returns None if the two snapshots are identical.
+    Returns None if the two snapshots are identical or the change is cosmetic.
     """
     old = load_snapshot(old_path)
     new = load_snapshot(new_path)
@@ -349,7 +433,17 @@ def build_change_record(
 
     edits = myers_diff(old["content"].splitlines(), new["content"].splitlines())
     change_type = classify_change(old["content"], new["content"])
+
+    if change_type == "COSMETIC":
+        return None
     old_excerpt, new_excerpt = extract_diff_context(old["content"], new["content"])
+
+    # Also check if the selected excerpt is cosmetic — the full-article
+    # classifier may pass (real changes elsewhere) but the chosen excerpt
+    # block may be a cosmetic diff that would produce useless QA pairs.
+    if _is_wording_only([old_excerpt], [new_excerpt]):
+        return None
+
     subtype = infer_subtype(old_excerpt, new_excerpt, change_type)
     complexity = infer_complexity(edits)
     gradient = build_temporal_gradient(entity_dir, old_path.stem, new_path.stem)
@@ -425,9 +519,10 @@ def classify_change(old_text: str, new_text: str) -> str:
         NUMERIC_UPDATE  – a number changed (stat, date, count, …)
         ADDITION        – new information added, nothing removed
         DELETION        – information removed, nothing added
+        COSMETIC        – only punctuation, formatting, or wording tweaks
 
     Priority when multiple types are present:
-        FACTUAL_UPDATE > NUMERIC_UPDATE > ADDITION > DELETION
+        FACTUAL_UPDATE > NUMERIC_UPDATE > ADDITION > DELETION > COSMETIC
     """
     a = old_text.splitlines()
     b = new_text.splitlines()
@@ -477,7 +572,7 @@ def classify_change(old_text: str, new_text: str) -> str:
         return "ADDITION"
     if has_deletion:
         return "DELETION"
-    return "FACTUAL_UPDATE"   # non-empty diff with only wording changes → treat as factual
+    return "COSMETIC"   # non-empty diff with only wording/formatting changes
 
 
 # ---------------------------------------------------------------------------
@@ -605,10 +700,36 @@ def run_batch(
     return written
 
 
+def _batch_all(out_path: str = "changes_full.jsonl"):
+    """Run batch diff on all entities across all categories."""
+    data_root = Path(__file__).parent / "data" / "wikipedia"
+    categories = [
+        "organizations", "people", "policy", "products",
+        "science", "science_biology_medicine", "science_physics_chemistry", "sports",
+    ]
+
+    entity_dirs: list[tuple[str, Path]] = []
+    for cat in categories:
+        cat_dir = data_root / cat
+        if not cat_dir.is_dir():
+            continue
+        for entity_dir in sorted(cat_dir.iterdir()):
+            if entity_dir.is_dir():
+                entity_dirs.append((cat, entity_dir))
+
+    print(f"Processing {len(entity_dirs)} entities across {len(categories)} categories...")
+    written = run_batch(entity_dirs, Path(out_path))
+    print(f"Done. Wrote {written} change records to {out_path}")
+
+
 def main():
     args = sys.argv[1:]
 
-    if len(args) == 0:
+    if args and args[0] == "--batch-all":
+        out = args[1] if len(args) > 1 else "changes_full.jsonl"
+        _batch_all(out)
+
+    elif len(args) == 0:
         _demo()
 
     elif len(args) == 1:
@@ -629,7 +750,7 @@ def main():
             print(classify_change(old["content"], new["content"]))
 
     else:
-        sys.exit("Usage: diff_classifier.py [entity_dir | old.json new.json]")
+        sys.exit("Usage: diff_classifier.py [--batch-all [output.jsonl] | entity_dir | old.json new.json]")
 
 
 if __name__ == "__main__":
