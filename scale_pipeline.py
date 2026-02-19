@@ -11,8 +11,8 @@ Groups:
   7. science_life_physical   (30 / 49)  — Physics/Chemistry + Biology/Medicine
 
 Usage:
-    python scale_pipeline.py                  # diff only → changes_210.jsonl
-    python scale_pipeline.py --with-qa        # diff + QA  → changes_210.jsonl + qa_pairs_210.jsonl
+    python scale_pipeline.py                  # diff only → data/benchmark/changes_210.jsonl
+    python scale_pipeline.py --with-qa        # diff + QA  → data/benchmark/changes_210.jsonl + data/benchmark/qa_pairs_210.jsonl
     python scale_pipeline.py --with-qa --qa-limit 5   # QA on first 5 changes only
 """
 
@@ -118,7 +118,7 @@ def main():
     for group, count in sorted(group_counts.items()):
         print(f"  {group}: {count}")
 
-    changes_path = _ROOT / "changes_210.jsonl"
+    changes_path = _ROOT / "data/benchmark/changes_210.jsonl"
     print(f"\nRunning batch diff...")
     written = run_batch(entities, changes_path)
     print(f"Wrote {written} change records to {changes_path}")
@@ -126,7 +126,7 @@ def main():
     # Step 2: QA generation (optional)
     if args.with_qa:
         from qa_generator import process_changes
-        qa_path = _ROOT / "qa_pairs_210.jsonl"
+        qa_path = _ROOT / "data/benchmark/qa_pairs_210.jsonl"
         print(f"\nRunning QA generation...")
         process_changes(changes_path, qa_path, limit=args.qa_limit)
 

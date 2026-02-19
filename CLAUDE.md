@@ -4,144 +4,171 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-**FRESH-bench** is a research benchmark dataset for evaluating AI/LLM systems on temporally-changing factual information. It collects Wikipedia article snapshots at multiple timestamps (2023-2025) across 598 entities in 8 categories, enabling evaluation of how well models handle knowledge that changes over time.
+**FRESH-bench** is a research benchmark for evaluating AI/LLM systems on temporally-changing factual information. It collects Wikipedia article snapshots at multiple timestamps (2023-2025) across 598 entities in 6 categories, enabling evaluation of how well models handle knowledge that changes over time. The current working dataset uses 210 sampled entities (30 per group × 7 groups).
 
 ## Commands
 
 ```bash
 # Install dependencies
-pip install requests jupyter
+pip install requests jupyter openai
 
-# Run the data collection notebook
+# Data collection notebook
 jupyter notebook wikidata_fetch.ipynb
 
-# Diff classifier — demo on Andrej Karpathy
-python diff_classifier.py
-
-# Diff classifier — compare consecutive snapshots for one entity
-python diff_classifier.py data/wikipedia/people/Elon_Musk
-
-# Diff classifier — compare two specific snapshot files
+# Diff classifier
+python diff_classifier.py                                              # demo on Andrej Karpathy
+python diff_classifier.py data/wikipedia/people/Elon_Musk              # compare consecutive snapshots
 python diff_classifier.py data/wikipedia/people/Elon_Musk/2023-01-01.json data/wikipedia/people/Elon_Musk/2024-01-01.json
+python diff_classifier.py --batch-all                                  # → changes_full.jsonl
 
-# Diff classifier — batch export all entities
-python diff_classifier.py --batch-all                    # → changes_full.jsonl
-python diff_classifier.py --batch-all custom_output.jsonl
+# Scale pipeline — 210-entity subset (30 per group × 7 groups)
+python scale_pipeline.py                                               # → data/benchmark/changes_210.jsonl
+python scale_pipeline.py --with-qa                                     # → + data/benchmark/qa_pairs_210.jsonl
 
-# QA generator — generate QA pairs from change records
-python qa_generator.py                                    # changes.jsonl → qa_pairs.jsonl
-python qa_generator.py --input changes.jsonl --limit 5    # test run
-python qa_generator.py --input changes_full.jsonl         # full dataset
-python qa_generator.py --run-diff-first                   # batch diff + QA generation
+# QA generator
+python qa_generator.py                                                 # data/benchmark/changes_210.jsonl → qa_pairs_210.jsonl
+python qa_generator.py --input data/benchmark/changes_210.jsonl --limit 5
+python qa_generator.py --run-diff-first                                # batch diff + QA generation
 
-# Retrieval scenarios — generate eval instances
-python retrieval_scenarios.py                              # qa_pairs_210.jsonl → eval_instances_210.jsonl
-python retrieval_scenarios.py --input qa_pairs.jsonl       # custom input
-python retrieval_scenarios.py --scenarios S1,S3             # subset of scenarios
-python retrieval_scenarios.py --max-doc-chars 2000          # truncate doc content (default)
+# Retrieval scenarios — generate eval instances (scenario × timestamp condition)
+python retrieval_scenarios.py                                          # → data/benchmark/eval_instances_210.jsonl
+python retrieval_scenarios.py --scenarios S1,S3                        # subset of scenarios
+python retrieval_scenarios.py --ts-conditions actual,none              # subset of timestamp conditions
+python retrieval_scenarios.py --max-doc-chars 2000                     # truncate doc content (default)
 
 # Eval harness — score predictions with 6 metrics
-python eval_harness.py --instances eval_instances_210.jsonl --predictions predictions.jsonl
-python eval_harness.py --instances eval_instances_210.jsonl --run-predictions          # generate + score
-python eval_harness.py --instances eval_instances_210.jsonl --run-predictions --predictions-only
-python eval_harness.py --instances eval_instances_210.jsonl --run-predictions --model gpt-4o --limit 10
+python eval_harness.py --instances data/benchmark/eval_instances_210.jsonl --predictions data/benchmark/predictions_210.jsonl
+python eval_harness.py --instances data/benchmark/eval_instances_210.jsonl --run-predictions
+python eval_harness.py --instances data/benchmark/eval_instances_210.jsonl --run-predictions --predictions-only
+python eval_harness.py --instances data/benchmark/eval_instances_210.jsonl --run-predictions --model gpt-4o --limit 10
+
+# Experiment analysis — statistical tests on scored instances
+python experiment_analysis.py --experiment 4.1 --scored data/benchmark/scored_210.jsonl
 ```
 
-The `.env` file contains `OPENAI_API_KEY` — load it before running any cells that call OpenAI APIs.
+The `.env` file contains `OPENAI_API_KEY` — required by `qa_generator.py` and `eval_harness.py --run-predictions`.
 
 ## Architecture
 
-Three main components plus retrieval scenario generation:
+### Pipeline Data Flow
+
+```
+wikidata_fetch.ipynb      → data/wikipedia/{category}/{entity}/{date}.json   (raw snapshots)
+        ↓
+diff_classifier.py        → data/benchmark/changes_210.jsonl                 (293 change records)
+        ↓
+qa_generator.py           → data/benchmark/qa_pairs_210.jsonl                (641 QA pairs with mechanism labels)
+        ↓
+retrieval_scenarios.py    → data/benchmark/eval_instances_210.jsonl           (9,615 instances: 641 QA × 5 scenarios × 3 ts conditions)
+        ↓
+eval_harness.py           → data/benchmark/predictions_210.jsonl             (model answers)
+                          → data/benchmark/scored_210.jsonl                  (per-instance metric scores)
+                          → data/benchmark/report_210.json                   (aggregated summary)
+        ↓
+experiment_analysis.py    → data/benchmark/experiment_4_1.json               (ANOVA results)
+```
+
+`scale_pipeline.py` orchestrates the first two steps for the 210-entity subset (deterministic sampling with seed 42, splitting science into AI/Space and Life/Physical subgroups).
 
 ### `wikidata_fetch.ipynb` — Data Collection
-A single Jupyter notebook (3 cells, Cell 0 is ~75K chars containing entity definitions and collection logic). Key function:
-- `get_article_at_timestamp(title, timestamp, max_retries=3)` — Fetches a Wikipedia article's content at a specific timestamp via the Wikipedia API. Returns a dict with `title`, `page_id`, `revision_id`, `revision_timestamp`, and `content`.
+Single Jupyter notebook (Cell 0 is ~75K chars with entity definitions and collection logic). Key function: `get_article_at_timestamp(title, timestamp)` fetches Wikipedia content at a specific timestamp via the API.
 
-Entity definitions (in Cell 0) have fields: `name`, `wikipedia_title`, `fame_level` (`"high"/"medium"/"low"`), and `change_type` (e.g., `"roles/companies"`, `"policy positions"`).
+Entity definitions have fields: `name`, `wikipedia_title`, `fame_level` (`"high"/"medium"/"low"`), and `change_type`.
 
 ### `diff_classifier.py` — Change Detection & Classification
-Standalone Python script implementing a pipeline to detect and classify factual changes between Wikipedia snapshots:
+Detects and classifies factual changes between Wikipedia snapshots:
 
-1. **Myers diff** (`myers_diff`) — line-level shortest edit script between two texts
-2. **Change classification** (`classify_change`) — categorizes diffs as `FACTUAL_UPDATE`, `NUMERIC_UPDATE`, `ADDITION`, or `DELETION` (priority in that order)
-3. **Diff context extraction** (`extract_diff_context`) — selects the most significant changed block, preferring infobox fields over prose
-4. **Semantic subtyping** (`infer_subtype`) — labels changes with subtypes like `leadership_change`, `numeric_stat`, `status_change`, etc. via regex patterns
-5. **Temporal gradient** (`build_temporal_gradient`) — maps all snapshots to T-N…T+M labels relative to the change event
-6. **Batch processing** (`run_batch`) — writes change records as JSONL in the benchmark schema
+1. **Myers diff** (`myers_diff`) — line-level shortest edit script
+2. **Change classification** (`classify_change`) — categorizes as `FACTUAL_UPDATE`, `NUMERIC_UPDATE`, `ADDITION`, or `DELETION`
+3. **Diff context extraction** (`extract_diff_context`) — selects most significant changed block, preferring infobox over prose
+4. **Semantic subtyping** (`infer_subtype`) — labels like `leadership_change`, `numeric_stat`, `status_change` via regex
+5. **Temporal gradient** (`build_temporal_gradient`) — maps snapshots to T-N…T+M labels relative to change event
+6. **Batch processing** (`run_batch`) — writes JSONL change records
 
-The classifier distinguishes factual changes from cosmetic edits using wiki markup stripping (`_strip_wiki_markup`), number extraction (`_numbers_differ`), and infobox key matching (`_same_infobox_key`).
+Distinguishes factual changes from cosmetic edits via `_strip_wiki_markup`, `_numbers_differ`, and `_same_infobox_key`. Entity key normalization: `re.sub(r"[^a-z0-9]+", "_", name.lower()).strip("_")`.
 
 ### `qa_generator.py` — QA Pair Generation
-Standalone CLI script that reads change records from JSONL and generates QA pairs with mechanism hypotheses via OpenAI:
-
-1. **`generate_qa_pairs(client, record)`** — calls OpenAI (gpt-4o-mini) to produce 3 QA pairs per change record, each with question, old/new answers, and predicted mechanism (KC/TS/PO/C)
-2. **`process_changes(input_path, output_path, limit)`** — batch runner with resume support (skips already-processed change_ids)
-3. **`run_diff_first(output_path)`** — convenience wrapper that runs `diff_classifier.run_batch()` on all entities before QA generation
-4. CLI flags: `--input`, `--output`, `--limit`, `--model`, `--run-diff-first`
+Calls OpenAI (gpt-4o-mini) to produce 3 QA pairs per change record with predicted failure mechanisms (KC/TS/PO/C). Has resume support — skips already-processed change_ids.
 
 ### `retrieval_scenarios.py` — Corpus Index & Retrieval Scenarios
-Standalone CLI script that builds a corpus index and generates eval instances under 5 retrieval scenarios:
+Builds a runtime `doc_id → file path` index (no data duplication), extracts relevant passages using answer hints, and generates eval instances under 5 scenarios × 3 timestamp conditions:
 
-1. **`build_corpus(qa_path, data_root)`** — runtime index mapping `doc_id → file path` by scanning `data/wikipedia/` and resolving doc_ids from QA temporal_gradient fields
-2. **`extract_passage(snapshot_path, answer_hint, max_chars)`** — extracts relevant passage from a snapshot, finding the paragraph containing the answer hint ± 1 surrounding paragraph
-3. **`select_docs(qa_record, scenario)`** — selects and ranks documents per scenario: S1 (fresh only), S2 (stale only), S3 (mixed fresh-dominant), S4 (mixed stale-dominant), S5 (mixed equal)
-4. **`generate_eval_instances(qa_path, ...)`** — produces JSONL eval instances (QA pair × scenario) with resolved document content
-5. CLI flags: `--input`, `--output`, `--scenarios`, `--max-doc-chars`, `--data-root`
+| Scenario | Description | Selection |
+|----------|-------------|-----------|
+| S1 | Fresh only | All docs with fact_state="new" |
+| S2 | Stale only | All docs with fact_state="old" |
+| S3 | Mixed fresh-dominant | Up to 2 fresh + 1 stale |
+| S4 | Mixed stale-dominant | Up to 1 fresh + 2 stale |
+| S5 | Mixed equal | Exactly T-1 (stale) + T+1 (fresh) |
+
+Timestamp conditions: `actual` (real dates shown), `none` (no dates), `misleading` (fresh/stale dates swapped).
 
 ### `eval_harness.py` — Evaluation Harness
-Standalone CLI script that scores model predictions using 6 metrics and optionally generates predictions via OpenAI:
+Scores model predictions using 6 metrics:
 
-1. **`token_f1(prediction, reference)`** — SQuAD-style token F1 score
-2. **`score_instance(instance, prediction)`** — computes 5 per-instance metrics: FA (Factual Accuracy), HR (Hallucination Rate), AU (Answer Uncertainty), CRS (Change Recognition Score), POS (Preference for Outdated Score)
-3. **`run_predictions(instances_path, output_path, model)`** — generates predictions by calling OpenAI with RAG prompt (question + retrieved docs), resume support
-4. **`aggregate_results(scored)`** — groups metrics by scenario, domain, mechanism; computes TGS (Temporal Gradient Score) as Pearson correlation of FA vs temporal distance
-5. **`evaluate(instances_path, predictions_path)`** — main pipeline: load, score, aggregate, write scored JSONL + summary JSON report
-6. CLI flags: `--instances`, `--predictions`, `--run-predictions`, `--predictions-only`, `--model`, `--limit`, `--output-dir`
+| Metric | Description |
+|--------|-------------|
+| FA | Factual Accuracy — token F1 vs new_answer |
+| HR | Hallucination Rate — matches neither answer (both F1 < 0.3) |
+| AU | Answer Uncertainty — hedging language detected |
+| CRS | Change Recognition Score — acknowledges information changed |
+| POS | Preference for Outdated — prefers old_answer over new_answer |
+| TGS | Temporal Gradient Score — Pearson correlation of FA vs temporal distance |
+
+Aggregates results by scenario, domain, mechanism, and timestamp condition. Optionally generates predictions via OpenAI.
+
+### `experiment_analysis.py` — Statistical Analysis
+Runs statistical tests on scored instances. Currently supports:
+- **Experiment 4.1**: Two-way ANOVA (scenario × timestamp_condition) for each metric, post-hoc pairwise comparisons (Bonferroni), cell means tables, stratified by mechanism. Uses scipy + pandas.
 
 ## Data Layout
 
 ```
-data/wikipedia/
-  {category}/
-    {entity_name}/
-      {timestamp}.json      # e.g., 2023-01-01.json, 2024-06-01.json
+data/
+  wikipedia/                  # Raw Wikipedia snapshots (~440 MB)
+    {category}/
+      {entity_name}/
+        {timestamp}.json      # 2023-01-01, 2023-06-01, 2024-01-01, 2024-06-01, 2025-01-01
+  benchmark/                  # Pipeline outputs (JSONL)
+    changes_210.jsonl
+    qa_pairs_210.jsonl
+    eval_instances_210.jsonl
+    predictions_210.jsonl     # generated by eval_harness
+    scored_210.jsonl          # generated by eval_harness
+    report_210.json           # generated by eval_harness
 ```
 
-**Categories:** `organizations`, `people`, `policy`, `products`, `science`, `science_biology_medicine`, `science_physics_chemistry`, `sports`
+**Active categories:** `organizations`, `people`, `policy`, `products`, `science`, `sports`
+**Legacy categories** (moved into `science/`): `science_biology_medicine`, `science_physics_chemistry`
 
-**Timestamps per entity:** `2023-01-01`, `2023-06-01`, `2024-01-01`, `2024-06-01`, `2025-01-01`
+Snapshot JSON schema: `{title, page_id, revision_id, revision_timestamp, content}` where `content` is full Wikipedia markup.
 
-**JSON file schema:**
-```json
-{
-  "title": "string",
-  "page_id": 123456,
-  "revision_id": 123456,
-  "revision_timestamp": "2023-01-01T00:00:00Z",
-  "content": "full Wikipedia markup text"
-}
-```
+## JSONL Record Schemas
 
-The `data/` directory is ~440 MB (598 entities × ~5 snapshots each = ~2,792 files) and is tracked in git.
+**Change record** (`changes_210.jsonl`): `{change_id, entity_id, domain, change_detection: {old_snapshot, new_snapshot, diff_context: {old_text, new_text}}, change_classification: {type, subtype}, temporal_gradient: {T-N..T+M: {date, fact_state, doc_id}}}`
+
+**QA pair** (`qa_pairs_210.jsonl`): `{qa_id, change_id, entity_id, domain, question, old_answer, new_answer, old_snapshot, new_snapshot, change_type, change_subtype, predicted_mechanism, mechanism_rationale, temporal_gradient}`
+
+**Eval instance** (`eval_instances_210.jsonl`): `{instance_id, qa_id, scenario, timestamp_condition, question, new_answer, old_answer, retrieved_docs: [{doc_id, content, date, fact_state, rank, display_date?}], domain, change_type, predicted_mechanism}`
 
 ## FreshRAG Experiment Steps
 
 ### Phase 1: Data Collection — DONE
-- [x] 1.1 Collect Wikipedia snapshots (598 entities × 5 timestamps, 8 categories)
-- [x] 1.2 Define entity metadata (name, wikipedia_title, fame_level, change_type)
-- [x] 1.3 Build diff pipeline (`diff_classifier.py`: Myers diff, change classification, context extraction)
+- [x] 1.1 Collect Wikipedia snapshots (598 entities × 5 timestamps)
+- [x] 1.2 Define entity metadata
+- [x] 1.3 Build diff pipeline (`diff_classifier.py`)
 
-### Phase 2: Dataset Construction (FreshRAG-QA)
-- [x] 2.1 Run batch diff on all entities — produce change records JSONL via `run_batch()` (10 entities done; `--batch-all` flag for full 598)
-- [x] 2.2 Generate QA pairs from detected changes using LLM (`qa_generator.py`, 3 questions per change)
-- [x] 2.3 Generate mechanism hypotheses (KC/TS/PO/C) for each QA pair via LLM (integrated into qa_generator.py)
+### Phase 2: Dataset Construction — DONE
+- [x] 2.1 Run batch diff → change records JSONL (210 entities via `scale_pipeline.py`)
+- [x] 2.2 Generate QA pairs from changes (`qa_generator.py`, 641 QA pairs)
+- [x] 2.3 Generate mechanism hypotheses (KC/TS/PO/C) per QA pair
 - [ ] 2.4 Human validation of ~5K sample (10% quality check)
 
 ### Phase 3: Benchmark Infrastructure
-- [x] 3.1 Build FreshRAG-Corpus: multi-temporal document store indexed by entity (`retrieval_scenarios.build_corpus`)
-- [x] 3.2 Implement 5 retrieval scenarios (S1: fresh only, S2: stale only, S3: mixed fresh-dominant, S4: mixed stale-dominant, S5: mixed equal) (`retrieval_scenarios.py`)
-- [ ] 3.3 Implement timestamp manipulation variants (with timestamps, without, misleading)
-- [x] 3.4 Build evaluation harness with metrics (FA, HR, AU, CRS, TGS, POS) (`eval_harness.py`)
+- [x] 3.1 Build FreshRAG-Corpus (`retrieval_scenarios.build_corpus`)
+- [x] 3.2 Implement 5 retrieval scenarios (`retrieval_scenarios.py`)
+- [x] 3.3 Implement timestamp manipulation variants: actual, none, misleading (`retrieval_scenarios.apply_timestamp_condition`)
+- [x] 3.4 Build evaluation harness with metrics (`eval_harness.py`)
 
 ### Phase 4: Experiments
 - [ ] 4.1 Experiment 1 — Mechanism Isolation: full factorial S1-S5 × timestamp conditions, ANOVA

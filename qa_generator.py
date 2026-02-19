@@ -5,8 +5,8 @@ Reads change records from JSONL (produced by diff_classifier.py) and generates
 question-answer pairs with mechanism hypotheses using OpenAI.
 
 Usage:
-    python qa_generator.py                                    # changes_210.jsonl → qa_pairs_210.jsonl
-    python qa_generator.py --input changes_210.jsonl --limit 5 # test run on first 5
+    python qa_generator.py                                    # data/benchmark/changes_210.jsonl → data/benchmark/qa_pairs_210.jsonl
+    python qa_generator.py --input data/benchmark/changes_210.jsonl --limit 5 # test run on first 5
     python qa_generator.py --input changes_full.jsonl         # full dataset
     python qa_generator.py --run-diff-first                   # run batch diff then generate QA
 """
@@ -331,13 +331,13 @@ def main():
     )
     parser.add_argument(
         "--input", "-i",
-        default="changes_210.jsonl",
-        help="Input JSONL file with change records (default: changes_210.jsonl)",
+        default="data/benchmark/changes_210.jsonl",
+        help="Input JSONL file with change records (default: data/benchmark/changes_210.jsonl)",
     )
     parser.add_argument(
         "--output", "-o",
-        default="qa_pairs_210.jsonl",
-        help="Output JSONL file for QA pairs (default: qa_pairs_210.jsonl)",
+        default="data/benchmark/qa_pairs_210.jsonl",
+        help="Output JSONL file for QA pairs (default: data/benchmark/qa_pairs_210.jsonl)",
     )
     parser.add_argument(
         "--limit", "-l",
@@ -363,7 +363,7 @@ def main():
 
     if args.run_diff_first:
         input_path = run_diff_first(output_path)
-        if args.output == "qa_pairs_210.jsonl":
+        if args.output == "data/benchmark/qa_pairs_210.jsonl":
             output_path = Path("qa_pairs_full.jsonl")
 
     if not input_path.exists():

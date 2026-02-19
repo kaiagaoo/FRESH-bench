@@ -1,13 +1,13 @@
 """
-FreshRAG Corpus & Retrieval Scenarios (Phase 3.1 + 3.2).
+FreshRAG Corpus & Retrieval Scenarios (Phase 3.1 + 3.2 + 3.3).
 
 Builds a corpus index from QA pairs' temporal_gradient fields, implements
-5 retrieval scenarios, and generates eval instances for benchmark evaluation.
+5 retrieval scenarios with 3 timestamp conditions, and generates eval instances.
 
 Usage:
-    python retrieval_scenarios.py                              # qa_pairs_210.jsonl → eval_instances_210.jsonl
-    python retrieval_scenarios.py --input qa_pairs.jsonl        # custom input
+    python retrieval_scenarios.py                              # data/benchmark/qa_pairs_210.jsonl → data/benchmark/eval_instances_210.jsonl
     python retrieval_scenarios.py --scenarios S1,S3             # subset of scenarios
+    python retrieval_scenarios.py --ts-conditions actual,none   # subset of timestamp conditions
     python retrieval_scenarios.py --max-doc-chars 2000          # truncate doc content (default)
 """
 
@@ -28,6 +28,7 @@ _SCRIPT_DIR = Path(__file__).parent
 _DATA_ROOT = _SCRIPT_DIR / "data" / "wikipedia"
 
 _ALL_SCENARIOS = ("S1", "S2", "S3", "S4", "S5")
+_ALL_TS_CONDITIONS = ("actual", "none", "misleading")
 
 
 def _strip_wiki_markup(text: str) -> str:
@@ -214,18 +215,63 @@ def select_docs(qa_record: dict, scenario: str) -> list[dict]:
 
 
 # ---------------------------------------------------------------------------
-# 4. Eval instance generation
+# 4. Timestamp manipulation  (Phase 3.3)
+# ---------------------------------------------------------------------------
+
+def apply_timestamp_condition(
+    retrieved_docs: list[dict],
+    condition: str,
+) -> list[dict]:
+    """
+    Apply a timestamp condition to retrieved docs.
+
+    Conditions:
+      - "actual":     keep real dates (no change)
+      - "none":       remove dates (set to None)
+      - "misleading": swap dates between fresh and stale docs — fresh docs
+                      get the oldest stale date, stale docs get the newest
+                      fresh date
+    """
+    if condition == "actual":
+        return retrieved_docs
+
+    docs = [dict(d) for d in retrieved_docs]  # shallow copy
+
+    if condition == "none":
+        for d in docs:
+            d["display_date"] = None
+        return docs
+
+    if condition == "misleading":
+        fresh_dates = sorted(d["date"] for d in docs if d["fact_state"] == "new")
+        stale_dates = sorted(d["date"] for d in docs if d["fact_state"] == "old")
+        # Fresh docs get the oldest stale date; stale docs get the newest fresh date
+        fake_old = stale_dates[0] if stale_dates else "2023-01-01"
+        fake_new = fresh_dates[-1] if fresh_dates else "2025-01-01"
+        for d in docs:
+            if d["fact_state"] == "new":
+                d["display_date"] = fake_old
+            else:
+                d["display_date"] = fake_new
+        return docs
+
+    raise ValueError(f"Unknown timestamp condition: {condition}")
+
+
+# ---------------------------------------------------------------------------
+# 5. Eval instance generation
 # ---------------------------------------------------------------------------
 
 def generate_eval_instances(
     qa_path: Path,
     data_root: Path = _DATA_ROOT,
     scenarios: tuple[str, ...] = _ALL_SCENARIOS,
+    ts_conditions: tuple[str, ...] = _ALL_TS_CONDITIONS,
     output_path: Path | None = None,
     max_doc_chars: int = 2000,
 ) -> int:
     """
-    Generate eval instances for each QA pair × each scenario.
+    Generate eval instances for each QA pair × scenario × timestamp condition.
     Writes JSONL to output_path. Returns number of instances written.
     """
     if output_path is None:
@@ -245,6 +291,10 @@ def generate_eval_instances(
                 records.append(json.loads(line))
     print(f"  Loaded {len(records)} QA pairs")
     print(f"  Scenarios: {', '.join(scenarios)}")
+    print(f"  Timestamp conditions: {', '.join(ts_conditions)}")
+
+    # Short labels for instance IDs
+    _ts_label = {"actual": "Ta", "none": "Tn", "misleading": "Tm"}
 
     written = 0
     skipped = 0
@@ -254,10 +304,10 @@ def generate_eval_instances(
             for scenario in scenarios:
                 docs = select_docs(rec, scenario)
                 if not docs:
-                    skipped += 1
+                    skipped += len(ts_conditions)
                     continue
 
-                # Resolve doc content
+                # Resolve doc content (shared across timestamp conditions)
                 retrieved_docs = []
                 for doc in docs:
                     doc_id = doc["doc_id"]
@@ -277,27 +327,31 @@ def generate_eval_instances(
                     })
 
                 if not retrieved_docs:
-                    skipped += 1
+                    skipped += len(ts_conditions)
                     continue
 
-                instance = {
-                    "instance_id": f"{qa_id}_{scenario}",
-                    "qa_id": qa_id,
-                    "scenario": scenario,
-                    "question": rec["question"],
-                    "new_answer": rec["new_answer"],
-                    "old_answer": rec["old_answer"],
-                    "retrieved_docs": retrieved_docs,
-                    "domain": rec["domain"],
-                    "change_type": rec["change_type"],
-                    "predicted_mechanism": rec["predicted_mechanism"],
-                }
-                fh.write(json.dumps(instance, ensure_ascii=False) + "\n")
-                written += 1
+                for ts_cond in ts_conditions:
+                    ts_docs = apply_timestamp_condition(retrieved_docs, ts_cond)
+                    ts_tag = _ts_label[ts_cond]
+                    instance = {
+                        "instance_id": f"{qa_id}_{scenario}_{ts_tag}",
+                        "qa_id": qa_id,
+                        "scenario": scenario,
+                        "timestamp_condition": ts_cond,
+                        "question": rec["question"],
+                        "new_answer": rec["new_answer"],
+                        "old_answer": rec["old_answer"],
+                        "retrieved_docs": ts_docs,
+                        "domain": rec["domain"],
+                        "change_type": rec["change_type"],
+                        "predicted_mechanism": rec["predicted_mechanism"],
+                    }
+                    fh.write(json.dumps(instance, ensure_ascii=False) + "\n")
+                    written += 1
 
     print(f"\nDone. Wrote {written} eval instances to {output_path}")
     if skipped:
-        print(f"  ({skipped} scenario/QA combos skipped — no matching docs)")
+        print(f"  ({skipped} scenario/ts combos skipped — no matching docs)")
     return written
 
 
@@ -311,8 +365,8 @@ def main():
     )
     parser.add_argument(
         "--input", "-i",
-        default="qa_pairs_210.jsonl",
-        help="Input JSONL file with QA pairs (default: qa_pairs_210.jsonl)",
+        default="data/benchmark/qa_pairs_210.jsonl",
+        help="Input JSONL file with QA pairs (default: data/benchmark/qa_pairs_210.jsonl)",
     )
     parser.add_argument(
         "--output", "-o",
@@ -329,6 +383,11 @@ def main():
         type=int,
         default=2000,
         help="Max characters per retrieved document passage (default: 2000)",
+    )
+    parser.add_argument(
+        "--ts-conditions", "-t",
+        default=None,
+        help="Comma-separated timestamp conditions: actual,none,misleading (default: all)",
     )
     parser.add_argument(
         "--data-root",
@@ -352,10 +411,19 @@ def main():
             if s not in _ALL_SCENARIOS:
                 sys.exit(f"Error: unknown scenario '{s}'. Must be one of {_ALL_SCENARIOS}")
 
+    ts_conditions = _ALL_TS_CONDITIONS
+    if args.ts_conditions:
+        ts_conditions = tuple(t.strip() for t in args.ts_conditions.split(","))
+        for t in ts_conditions:
+            if t not in _ALL_TS_CONDITIONS:
+                sys.exit(f"Error: unknown timestamp condition '{t}'. "
+                         f"Must be one of {_ALL_TS_CONDITIONS}")
+
     generate_eval_instances(
         qa_path=qa_path,
         data_root=data_root,
         scenarios=scenarios,
+        ts_conditions=ts_conditions,
         output_path=output_path,
         max_doc_chars=args.max_doc_chars,
     )

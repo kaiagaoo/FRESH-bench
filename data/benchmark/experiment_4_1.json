@@ -1,0 +1,1767 @@
+{
+  "experiment": "4.1",
+  "description": "Mechanism Isolation",
+  "anova": {
+    "FA": {
+      "metric": "FA",
+      "factor_a": "scenario",
+      "factor_b": "timestamp_condition",
+      "main_effect_a": {
+        "SS": 14.3627,
+        "df": 4,
+        "F": 50.1597,
+        "p": 0.0,
+        "eta_squared": 0.0205
+      },
+      "main_effect_b": {
+        "SS": 0.0333,
+        "df": 2,
+        "F": 0.2324,
+        "p": 0.792611,
+        "eta_squared": 0.0
+      },
+      "interaction": {
+        "SS": 0.0255,
+        "df": 8,
+        "F": 0.0445,
+        "p": 0.999964,
+        "eta_squared": 0.0
+      },
+      "residual": {
+        "SS": 687.2157,
+        "df": 9600
+      }
+    },
+    "HR": {
+      "metric": "HR",
+      "factor_a": "scenario",
+      "factor_b": "timestamp_condition",
+      "main_effect_a": {
+        "SS": 18.0982,
+        "df": 4,
+        "F": 22.3348,
+        "p": 0.0,
+        "eta_squared": 0.0092
+      },
+      "main_effect_b": {
+        "SS": 0.0433,
+        "df": 2,
+        "F": 0.1068,
+        "p": 0.898718,
+        "eta_squared": 0.0
+      },
+      "interaction": {
+        "SS": 0.1439,
+        "df": 8,
+        "F": 0.0888,
+        "p": 0.999499,
+        "eta_squared": 0.0001
+      },
+      "residual": {
+        "SS": 1944.7551,
+        "df": 9600
+      }
+    },
+    "AU": {
+      "metric": "AU",
+      "factor_a": "scenario",
+      "factor_b": "timestamp_condition",
+      "main_effect_a": {
+        "SS": 51.9767,
+        "df": 4,
+        "F": 59.6155,
+        "p": 0.0,
+        "eta_squared": 0.0242
+      },
+      "main_effect_b": {
+        "SS": 0.5643,
+        "df": 2,
+        "F": 1.2945,
+        "p": 0.274075,
+        "eta_squared": 0.0003
+      },
+      "interaction": {
+        "SS": 0.5724,
+        "df": 8,
+        "F": 0.3283,
+        "p": 0.955559,
+        "eta_squared": 0.0003
+      },
+      "residual": {
+        "SS": 2092.4774,
+        "df": 9600
+      }
+    },
+    "CRS": {
+      "metric": "CRS",
+      "factor_a": "scenario",
+      "factor_b": "timestamp_condition",
+      "main_effect_a": {
+        "SS": 6.8449,
+        "df": 4,
+        "F": 7.886,
+        "p": 2e-06,
+        "eta_squared": 0.0033
+      },
+      "main_effect_b": {
+        "SS": 0.004,
+        "df": 2,
+        "F": 0.0091,
+        "p": 0.990935,
+        "eta_squared": 0.0
+      },
+      "interaction": {
+        "SS": 0.1229,
+        "df": 8,
+        "F": 0.0708,
+        "p": 0.999786,
+        "eta_squared": 0.0001
+      },
+      "residual": {
+        "SS": 2083.1607,
+        "df": 9600
+      }
+    },
+    "POS": {
+      "metric": "POS",
+      "factor_a": "scenario",
+      "factor_b": "timestamp_condition",
+      "main_effect_a": {
+        "SS": 15.3441,
+        "df": 4,
+        "F": 27.7834,
+        "p": 0.0,
+        "eta_squared": 0.0114
+      },
+      "main_effect_b": {
+        "SS": 0.1392,
+        "df": 2,
+        "F": 0.5039,
+        "p": 0.604161,
+        "eta_squared": 0.0001
+      },
+      "interaction": {
+        "SS": 0.1261,
+        "df": 8,
+        "F": 0.1141,
+        "p": 0.998739,
+        "eta_squared": 0.0001
+      },
+      "residual": {
+        "SS": 1325.4665,
+        "df": 9600
+      }
+    }
+  },
+  "posthoc": {
+    "FA": {
+      "by_scenario": [
+        {
+          "pair": "S1 vs S2",
+          "mean_diff": 0.0987,
+          "t_stat": 12.0511,
+          "p_raw": 0.0,
+          "p_bonferroni": 0.0,
+          "significant": true
+        },
+        {
+          "pair": "S1 vs S3",
+          "mean_diff": 0.0056,
+          "t_stat": 0.6362,
+          "p_raw": 0.524674,
+          "p_bonferroni": 1.0,
+          "significant": false
+        },
+        {
+          "pair": "S1 vs S4",
+          "mean_diff": 0.0018,
+          "t_stat": 0.2087,
+          "p_raw": 0.834711,
+          "p_bonferroni": 1.0,
+          "significant": false
+        },
+        {
+          "pair": "S1 vs S5",
+          "mean_diff": 0.0013,
+          "t_stat": 0.1468,
+          "p_raw": 0.883262,
+          "p_bonferroni": 1.0,
+          "significant": false
+        },
+        {
+          "pair": "S2 vs S3",
+          "mean_diff": -0.0931,
+          "t_stat": -11.3821,
+          "p_raw": 0.0,
+          "p_bonferroni": 0.0,
+          "significant": true
+        },
+        {
+          "pair": "S2 vs S4",
+          "mean_diff": -0.0969,
+          "t_stat": -11.8295,
+          "p_raw": 0.0,
+          "p_bonferroni": 0.0,
+          "significant": true
+        },
+        {
+          "pair": "S2 vs S5",
+          "mean_diff": -0.0974,
+          "t_stat": -11.7746,
+          "p_raw": 0.0,
+          "p_bonferroni": 0.0,
+          "significant": true
+        },
+        {
+          "pair": "S3 vs S4",
+          "mean_diff": -0.0038,
+          "t_stat": -0.4274,
+          "p_raw": 0.669086,
+          "p_bonferroni": 1.0,
+          "significant": false
+        },
+        {
+          "pair": "S3 vs S5",
+          "mean_diff": -0.0043,
+          "t_stat": -0.4838,
+          "p_raw": 0.628536,
+          "p_bonferroni": 1.0,
+          "significant": false
+        },
+        {
+          "pair": "S4 vs S5",
+          "mean_diff": -0.0005,
+          "t_stat": -0.06,
+          "p_raw": 0.952126,
+          "p_bonferroni": 1.0,
+          "significant": false
+        }
+      ],
+      "by_timestamp_condition": [
+        {
+          "pair": "actual vs misleading",
+          "mean_diff": 0.0033,
+          "t_stat": 0.4929,
+          "p_raw": 0.622086,
+          "p_bonferroni": 1.0,
+          "significant": false
+        },
+        {
+          "pair": "actual vs none",
+          "mean_diff": -0.001,
+          "t_stat": -0.154,
+          "p_raw": 0.877633,
+          "p_bonferroni": 1.0,
+          "significant": false
+        },
+        {
+          "pair": "misleading vs none",
+          "mean_diff": -0.0044,
+          "t_stat": -0.647,
+          "p_raw": 0.517664,
+          "p_bonferroni": 1.0,
+          "significant": false
+        }
+      ]
+    },
+    "HR": {
+      "by_scenario": [
+        {
+          "pair": "S1 vs S2",
+          "mean_diff": -0.0723,
+          "t_stat": -4.7778,
+          "p_raw": 2e-06,
+          "p_bonferroni": 1.8e-05,
+          "significant": true
+        },
+        {
+          "pair": "S1 vs S3",
+          "mean_diff": 0.0276,
+          "t_stat": 1.9026,
+          "p_raw": 0.057162,
+          "p_bonferroni": 0.571622,
+          "significant": false
+        },
+        {
+          "pair": "S1 vs S4",
+          "mean_diff": 0.0411,
+          "t_stat": 2.8591,
+          "p_raw": 0.004271,
+          "p_bonferroni": 0.042713,
+          "significant": true
+        },
+        {
+          "pair": "S1 vs S5",
+          "mean_diff": 0.0458,
+          "t_stat": 3.1942,
+          "p_raw": 0.001413,
+          "p_bonferroni": 0.014134,
+          "significant": true
+        },
+        {
+          "pair": "S2 vs S3",
+          "mean_diff": 0.0998,
+          "t_stat": 6.6922,
+          "p_raw": 0.0,
+          "p_bonferroni": 0.0,
+          "significant": true
+        },
+        {
+          "pair": "S2 vs S4",
+          "mean_diff": 0.1134,
+          "t_stat": 7.6568,
+          "p_raw": 0.0,
+          "p_bonferroni": 0.0,
+          "significant": true
+        },
+        {
+          "pair": "S2 vs S5",
+          "mean_diff": 0.118,
+          "t_stat": 7.995,
+          "p_raw": 0.0,
+          "p_bonferroni": 0.0,
+          "significant": true
+        },
+        {
+          "pair": "S3 vs S4",
+          "mean_diff": 0.0135,
+          "t_stat": 0.9557,
+          "p_raw": 0.339309,
+          "p_bonferroni": 1.0,
+          "significant": false
+        },
+        {
+          "pair": "S3 vs S5",
+          "mean_diff": 0.0182,
+          "t_stat": 1.2904,
+          "p_raw": 0.197,
+          "p_bonferroni": 1.0,
+          "significant": false
+        },
+        {
+          "pair": "S4 vs S5",
+          "mean_diff": 0.0047,
+          "t_stat": 0.3347,
+          "p_raw": 0.737899,
+          "p_bonferroni": 1.0,
+          "significant": false
+        }
+      ],
+      "by_timestamp_condition": [
+        {
+          "pair": "actual vs misleading",
+          "mean_diff": -0.0012,
+          "t_stat": -0.1104,
+          "p_raw": 0.912107,
+          "p_bonferroni": 1.0,
+          "significant": false
+        },
+        {
+          "pair": "actual vs none",
+          "mean_diff": 0.0037,
+          "t_stat": 0.332,
+          "p_raw": 0.73988,
+          "p_bonferroni": 1.0,
+          "significant": false
+        },
+        {
+          "pair": "misleading vs none",
+          "mean_diff": 0.005,
+          "t_stat": 0.4424,
+          "p_raw": 0.658204,
+          "p_bonferroni": 1.0,
+          "significant": false
+        }
+      ]
+    },
+    "AU": {
+      "by_scenario": [
+        {
+          "pair": "S1 vs S2",
+          "mean_diff": -0.1326,
+          "t_stat": -8.4349,
+          "p_raw": 0.0,
+          "p_bonferroni": 0.0,
+          "significant": true
+        },
+        {
+          "pair": "S1 vs S3",
+          "mean_diff": 0.0593,
+          "t_stat": 3.9675,
+          "p_raw": 7.4e-05,
+          "p_bonferroni": 0.00074,
+          "significant": true
+        },
+        {
+          "pair": "S1 vs S4",
+          "mean_diff": 0.0593,
+          "t_stat": 3.9675,
+          "p_raw": 7.4e-05,
+          "p_bonferroni": 0.00074,
+          "significant": true
+        },
+        {
+          "pair": "S1 vs S5",
+          "mean_diff": 0.052,
+          "t_stat": 3.4678,
+          "p_raw": 0.000531,
+          "p_bonferroni": 0.005305,
+          "significant": true
+        },
+        {
+          "pair": "S2 vs S3",
+          "mean_diff": 0.1919,
+          "t_stat": 12.4993,
+          "p_raw": 0.0,
+          "p_bonferroni": 0.0,
+          "significant": true
+        },
+        {
+          "pair": "S2 vs S4",
+          "mean_diff": 0.1919,
+          "t_stat": 12.4993,
+          "p_raw": 0.0,
+          "p_bonferroni": 0.0,
+          "significant": true
+        },
+        {
+          "pair": "S2 vs S5",
+          "mean_diff": 0.1846,
+          "t_stat": 11.9843,
+          "p_raw": 0.0,
+          "p_bonferroni": 0.0,
+          "significant": true
+        },
+        {
+          "pair": "S3 vs S4",
+          "mean_diff": 0.0,
+          "t_stat": 0.0,
+          "p_raw": 1.0,
+          "p_bonferroni": 1.0,
+          "significant": false
+        },
+        {
+          "pair": "S3 vs S5",
+          "mean_diff": -0.0073,
+          "t_stat": -0.4984,
+          "p_raw": 0.618256,
+          "p_bonferroni": 1.0,
+          "significant": false
+        },
+        {
+          "pair": "S4 vs S5",
+          "mean_diff": -0.0073,
+          "t_stat": -0.4984,
+          "p_raw": 0.618256,
+          "p_bonferroni": 1.0,
+          "significant": false
+        }
+      ],
+      "by_timestamp_condition": [
+        {
+          "pair": "actual vs misleading",
+          "mean_diff": -0.0147,
+          "t_stat": -1.2458,
+          "p_raw": 0.212885,
+          "p_bonferroni": 0.638655,
+          "significant": false
+        },
+        {
+          "pair": "actual vs none",
+          "mean_diff": -0.0175,
+          "t_stat": -1.4829,
+          "p_raw": 0.138159,
+          "p_bonferroni": 0.414478,
+          "significant": false
+        },
+        {
+          "pair": "misleading vs none",
+          "mean_diff": -0.0028,
+          "t_stat": -0.237,
+          "p_raw": 0.812653,
+          "p_bonferroni": 1.0,
+          "significant": false
+        }
+      ]
+    },
+    "CRS": {
+      "by_scenario": [
+        {
+          "pair": "S1 vs S2",
+          "mean_diff": -0.0764,
+          "t_stat": -5.0446,
+          "p_raw": 0.0,
+          "p_bonferroni": 5e-06,
+          "significant": true
+        },
+        {
+          "pair": "S1 vs S3",
+          "mean_diff": -0.0125,
+          "t_stat": -0.8435,
+          "p_raw": 0.399013,
+          "p_bonferroni": 1.0,
+          "significant": false
+        },
+        {
+          "pair": "S1 vs S4",
+          "mean_diff": -0.0177,
+          "t_stat": -1.1921,
+          "p_raw": 0.233283,
+          "p_bonferroni": 1.0,
+          "significant": false
+        },
+        {
+          "pair": "S1 vs S5",
+          "mean_diff": -0.0161,
+          "t_stat": -1.0877,
+          "p_raw": 0.276796,
+          "p_bonferroni": 1.0,
+          "significant": false
+        },
+        {
+          "pair": "S2 vs S3",
+          "mean_diff": 0.064,
+          "t_stat": 4.1974,
+          "p_raw": 2.8e-05,
+          "p_bonferroni": 0.000276,
+          "significant": true
+        },
+        {
+          "pair": "S2 vs S4",
+          "mean_diff": 0.0588,
+          "t_stat": 3.8477,
+          "p_raw": 0.000121,
+          "p_bonferroni": 0.001212,
+          "significant": true
+        },
+        {
+          "pair": "S2 vs S5",
+          "mean_diff": 0.0603,
+          "t_stat": 3.9524,
+          "p_raw": 7.9e-05,
+          "p_bonferroni": 0.000788,
+          "significant": true
+        },
+        {
+          "pair": "S3 vs S4",
+          "mean_diff": -0.0052,
+          "t_stat": -0.3486,
+          "p_raw": 0.727419,
+          "p_bonferroni": 1.0,
+          "significant": false
+        },
+        {
+          "pair": "S3 vs S5",
+          "mean_diff": -0.0036,
+          "t_stat": -0.2442,
+          "p_raw": 0.807106,
+          "p_bonferroni": 1.0,
+          "significant": false
+        },
+        {
+          "pair": "S4 vs S5",
+          "mean_diff": 0.0016,
+          "t_stat": 0.1044,
+          "p_raw": 0.916852,
+          "p_bonferroni": 1.0,
+          "significant": false
+        }
+      ],
+      "by_timestamp_condition": [
+        {
+          "pair": "actual vs misleading",
+          "mean_diff": -0.0016,
+          "t_stat": -0.1339,
+          "p_raw": 0.893462,
+          "p_bonferroni": 1.0,
+          "significant": false
+        },
+        {
+          "pair": "actual vs none",
+          "mean_diff": -0.0009,
+          "t_stat": -0.0804,
+          "p_raw": 0.935938,
+          "p_bonferroni": 1.0,
+          "significant": false
+        },
+        {
+          "pair": "misleading vs none",
+          "mean_diff": 0.0006,
+          "t_stat": 0.0536,
+          "p_raw": 0.957294,
+          "p_bonferroni": 1.0,
+          "significant": false
+        }
+      ]
+    },
+    "POS": {
+      "by_scenario": [
+        {
+          "pair": "S1 vs S2",
+          "mean_diff": -0.1212,
+          "t_stat": -10.0138,
+          "p_raw": 0.0,
+          "p_bonferroni": 0.0,
+          "significant": true
+        },
+        {
+          "pair": "S1 vs S3",
+          "mean_diff": -0.0359,
+          "t_stat": -3.2871,
+          "p_raw": 0.001021,
+          "p_bonferroni": 0.010215,
+          "significant": true
+        },
+        {
+          "pair": "S1 vs S4",
+          "mean_diff": -0.0437,
+          "t_stat": -3.9554,
+          "p_raw": 7.8e-05,
+          "p_bonferroni": 0.000778,
+          "significant": true
+        },
+        {
+          "pair": "S1 vs S5",
+          "mean_diff": -0.065,
+          "t_stat": -5.7163,
+          "p_raw": 0.0,
+          "p_bonferroni": 0.0,
+          "significant": true
+        },
+        {
+          "pair": "S2 vs S3",
+          "mean_diff": 0.0853,
+          "t_stat": 6.7394,
+          "p_raw": 0.0,
+          "p_bonferroni": 0.0,
+          "significant": true
+        },
+        {
+          "pair": "S2 vs S4",
+          "mean_diff": 0.0775,
+          "t_stat": 6.0701,
+          "p_raw": 0.0,
+          "p_bonferroni": 0.0,
+          "significant": true
+        },
+        {
+          "pair": "S2 vs S5",
+          "mean_diff": 0.0562,
+          "t_stat": 4.3038,
+          "p_raw": 1.7e-05,
+          "p_bonferroni": 0.000172,
+          "significant": true
+        },
+        {
+          "pair": "S3 vs S4",
+          "mean_diff": -0.0078,
+          "t_stat": -0.6696,
+          "p_raw": 0.50313,
+          "p_bonferroni": 1.0,
+          "significant": false
+        },
+        {
+          "pair": "S3 vs S5",
+          "mean_diff": -0.0291,
+          "t_stat": -2.4349,
+          "p_raw": 0.014941,
+          "p_bonferroni": 0.149411,
+          "significant": false
+        },
+        {
+          "pair": "S4 vs S5",
+          "mean_diff": -0.0213,
+          "t_stat": -1.7655,
+          "p_raw": 0.077566,
+          "p_bonferroni": 0.775661,
+          "significant": false
+        }
+      ],
+      "by_timestamp_condition": [
+        {
+          "pair": "actual vs misleading",
+          "mean_diff": -0.0087,
+          "t_stat": -0.9343,
+          "p_raw": 0.350199,
+          "p_bonferroni": 1.0,
+          "significant": false
+        },
+        {
+          "pair": "actual vs none",
+          "mean_diff": -0.0016,
+          "t_stat": -0.1683,
+          "p_raw": 0.866379,
+          "p_bonferroni": 1.0,
+          "significant": false
+        },
+        {
+          "pair": "misleading vs none",
+          "mean_diff": 0.0072,
+          "t_stat": 0.766,
+          "p_raw": 0.443699,
+          "p_bonferroni": 1.0,
+          "significant": false
+        }
+      ]
+    }
+  },
+  "cell_means": {
+    "FA": {
+      "S1": {
+        "actual": {
+          "mean": 0.4335,
+          "std": 0.2761,
+          "n": 641
+        },
+        "misleading": {
+          "mean": 0.4318,
+          "std": 0.2741,
+          "n": 641
+        },
+        "none": {
+          "mean": 0.4338,
+          "std": 0.2746,
+          "n": 641
+        }
+      },
+      "S2": {
+        "actual": {
+          "mean": 0.3347,
+          "std": 0.2312,
+          "n": 641
+        },
+        "misleading": {
+          "mean": 0.3349,
+          "std": 0.2318,
+          "n": 641
+        },
+        "none": {
+          "mean": 0.3335,
+          "std": 0.2313,
+          "n": 641
+        }
+      },
+      "S3": {
+        "actual": {
+          "mean": 0.4285,
+          "std": 0.2751,
+          "n": 641
+        },
+        "misleading": {
+          "mean": 0.4251,
+          "std": 0.2731,
+          "n": 641
+        },
+        "none": {
+          "mean": 0.4287,
+          "std": 0.2743,
+          "n": 641
+        }
+      },
+      "S4": {
+        "actual": {
+          "mean": 0.4324,
+          "std": 0.2756,
+          "n": 641
+        },
+        "misleading": {
+          "mean": 0.4261,
+          "std": 0.2729,
+          "n": 641
+        },
+        "none": {
+          "mean": 0.4352,
+          "std": 0.2757,
+          "n": 641
+        }
+      },
+      "S5": {
+        "actual": {
+          "mean": 0.4326,
+          "std": 0.2789,
+          "n": 641
+        },
+        "misleading": {
+          "mean": 0.4271,
+          "std": 0.2772,
+          "n": 641
+        },
+        "none": {
+          "mean": 0.4356,
+          "std": 0.2825,
+          "n": 641
+        }
+      }
+    },
+    "HR": {
+      "S1": {
+        "actual": {
+          "mean": 0.3011,
+          "std": 0.4591,
+          "n": 641
+        },
+        "misleading": {
+          "mean": 0.2902,
+          "std": 0.4542,
+          "n": 641
+        },
+        "none": {
+          "mean": 0.2917,
+          "std": 0.4549,
+          "n": 641
+        }
+      },
+      "S2": {
+        "actual": {
+          "mean": 0.3588,
+          "std": 0.48,
+          "n": 641
+        },
+        "misleading": {
+          "mean": 0.3713,
+          "std": 0.4835,
+          "n": 641
+        },
+        "none": {
+          "mean": 0.3697,
+          "std": 0.4831,
+          "n": 641
+        }
+      },
+      "S3": {
+        "actual": {
+          "mean": 0.2699,
+          "std": 0.4442,
+          "n": 641
+        },
+        "misleading": {
+          "mean": 0.2699,
+          "std": 0.4442,
+          "n": 641
+        },
+        "none": {
+          "mean": 0.2605,
+          "std": 0.4393,
+          "n": 641
+        }
+      },
+      "S4": {
+        "actual": {
+          "mean": 0.2559,
+          "std": 0.4367,
+          "n": 641
+        },
+        "misleading": {
+          "mean": 0.2559,
+          "std": 0.4367,
+          "n": 641
+        },
+        "none": {
+          "mean": 0.248,
+          "std": 0.4322,
+          "n": 641
+        }
+      },
+      "S5": {
+        "actual": {
+          "mean": 0.248,
+          "std": 0.4322,
+          "n": 641
+        },
+        "misleading": {
+          "mean": 0.2527,
+          "std": 0.4349,
+          "n": 641
+        },
+        "none": {
+          "mean": 0.2449,
+          "std": 0.4304,
+          "n": 641
+        }
+      }
+    },
+    "AU": {
+      "S1": {
+        "actual": {
+          "mean": 0.3401,
+          "std": 0.4741,
+          "n": 641
+        },
+        "misleading": {
+          "mean": 0.3495,
+          "std": 0.4772,
+          "n": 641
+        },
+        "none": {
+          "mean": 0.3417,
+          "std": 0.4746,
+          "n": 641
+        }
+      },
+      "S2": {
+        "actual": {
+          "mean": 0.4555,
+          "std": 0.4984,
+          "n": 641
+        },
+        "misleading": {
+          "mean": 0.4961,
+          "std": 0.5004,
+          "n": 641
+        },
+        "none": {
+          "mean": 0.4774,
+          "std": 0.4999,
+          "n": 641
+        }
+      },
+      "S3": {
+        "actual": {
+          "mean": 0.2746,
+          "std": 0.4466,
+          "n": 641
+        },
+        "misleading": {
+          "mean": 0.2824,
+          "std": 0.4505,
+          "n": 641
+        },
+        "none": {
+          "mean": 0.2964,
+          "std": 0.457,
+          "n": 641
+        }
+      },
+      "S4": {
+        "actual": {
+          "mean": 0.2683,
+          "std": 0.4434,
+          "n": 641
+        },
+        "misleading": {
+          "mean": 0.2902,
+          "std": 0.4542,
+          "n": 641
+        },
+        "none": {
+          "mean": 0.2949,
+          "std": 0.4563,
+          "n": 641
+        }
+      },
+      "S5": {
+        "actual": {
+          "mean": 0.2886,
+          "std": 0.4535,
+          "n": 641
+        },
+        "misleading": {
+          "mean": 0.2824,
+          "std": 0.4505,
+          "n": 641
+        },
+        "none": {
+          "mean": 0.3042,
+          "std": 0.4604,
+          "n": 641
+        }
+      }
+    },
+    "CRS": {
+      "S1": {
+        "actual": {
+          "mean": 0.2949,
+          "std": 0.4563,
+          "n": 641
+        },
+        "misleading": {
+          "mean": 0.2964,
+          "std": 0.457,
+          "n": 641
+        },
+        "none": {
+          "mean": 0.2933,
+          "std": 0.4556,
+          "n": 641
+        }
+      },
+      "S2": {
+        "actual": {
+          "mean": 0.3651,
+          "std": 0.4818,
+          "n": 641
+        },
+        "misleading": {
+          "mean": 0.376,
+          "std": 0.4848,
+          "n": 641
+        },
+        "none": {
+          "mean": 0.3729,
+          "std": 0.4839,
+          "n": 641
+        }
+      },
+      "S3": {
+        "actual": {
+          "mean": 0.3089,
+          "std": 0.4624,
+          "n": 641
+        },
+        "misleading": {
+          "mean": 0.3011,
+          "std": 0.4591,
+          "n": 641
+        },
+        "none": {
+          "mean": 0.312,
+          "std": 0.4637,
+          "n": 641
+        }
+      },
+      "S4": {
+        "actual": {
+          "mean": 0.3089,
+          "std": 0.4624,
+          "n": 641
+        },
+        "misleading": {
+          "mean": 0.3151,
+          "std": 0.4649,
+          "n": 641
+        },
+        "none": {
+          "mean": 0.3136,
+          "std": 0.4643,
+          "n": 641
+        }
+      },
+      "S5": {
+        "actual": {
+          "mean": 0.3151,
+          "std": 0.4649,
+          "n": 641
+        },
+        "misleading": {
+          "mean": 0.312,
+          "std": 0.4637,
+          "n": 641
+        },
+        "none": {
+          "mean": 0.3058,
+          "std": 0.4611,
+          "n": 641
+        }
+      }
+    },
+    "POS": {
+      "S1": {
+        "actual": {
+          "mean": 0.1154,
+          "std": 0.3198,
+          "n": 641
+        },
+        "misleading": {
+          "mean": 0.1154,
+          "std": 0.3198,
+          "n": 641
+        },
+        "none": {
+          "mean": 0.1123,
+          "std": 0.316,
+          "n": 641
+        }
+      },
+      "S2": {
+        "actual": {
+          "mean": 0.2324,
+          "std": 0.4227,
+          "n": 641
+        },
+        "misleading": {
+          "mean": 0.2356,
+          "std": 0.4247,
+          "n": 641
+        },
+        "none": {
+          "mean": 0.2387,
+          "std": 0.4266,
+          "n": 641
+        }
+      },
+      "S3": {
+        "actual": {
+          "mean": 0.1451,
+          "std": 0.3525,
+          "n": 641
+        },
+        "misleading": {
+          "mean": 0.156,
+          "std": 0.3631,
+          "n": 641
+        },
+        "none": {
+          "mean": 0.1498,
+          "std": 0.3571,
+          "n": 641
+        }
+      },
+      "S4": {
+        "actual": {
+          "mean": 0.1544,
+          "std": 0.3617,
+          "n": 641
+        },
+        "misleading": {
+          "mean": 0.17,
+          "std": 0.376,
+          "n": 641
+        },
+        "none": {
+          "mean": 0.1498,
+          "std": 0.3571,
+          "n": 641
+        }
+      },
+      "S5": {
+        "actual": {
+          "mean": 0.1732,
+          "std": 0.3787,
+          "n": 641
+        },
+        "misleading": {
+          "mean": 0.1872,
+          "std": 0.3904,
+          "n": 641
+        },
+        "none": {
+          "mean": 0.1778,
+          "std": 0.3827,
+          "n": 641
+        }
+      }
+    }
+  },
+  "by_mechanism": {
+    "C": {
+      "n": 1380,
+      "anova": {
+        "FA": {
+          "metric": "FA",
+          "factor_a": "scenario",
+          "factor_b": "timestamp_condition",
+          "main_effect_a": {
+            "SS": 0.4145,
+            "df": 4,
+            "F": 1.5511,
+            "p": 0.185048,
+            "eta_squared": 0.0045
+          },
+          "main_effect_b": {
+            "SS": 0.0026,
+            "df": 2,
+            "F": 0.0191,
+            "p": 0.981066,
+            "eta_squared": 0.0
+          },
+          "interaction": {
+            "SS": 0.0127,
+            "df": 8,
+            "F": 0.0238,
+            "p": 0.999997,
+            "eta_squared": 0.0001
+          },
+          "residual": {
+            "SS": 91.1819,
+            "df": 1365
+          }
+        },
+        "HR": {
+          "metric": "HR",
+          "factor_a": "scenario",
+          "factor_b": "timestamp_condition",
+          "main_effect_a": {
+            "SS": 1.1696,
+            "df": 4,
+            "F": 1.7799,
+            "p": 0.130385,
+            "eta_squared": 0.0052
+          },
+          "main_effect_b": {
+            "SS": 0.0275,
+            "df": 2,
+            "F": 0.0838,
+            "p": 0.919611,
+            "eta_squared": 0.0001
+          },
+          "interaction": {
+            "SS": 0.1174,
+            "df": 8,
+            "F": 0.0893,
+            "p": 0.999485,
+            "eta_squared": 0.0005
+          },
+          "residual": {
+            "SS": 224.2391,
+            "df": 1365
+          }
+        },
+        "AU": {
+          "metric": "AU",
+          "factor_a": "scenario",
+          "factor_b": "timestamp_condition",
+          "main_effect_a": {
+            "SS": 2.1188,
+            "df": 4,
+            "F": 2.8156,
+            "p": 0.024155,
+            "eta_squared": 0.0082
+          },
+          "main_effect_b": {
+            "SS": 0.0971,
+            "df": 2,
+            "F": 0.2581,
+            "p": 0.772584,
+            "eta_squared": 0.0004
+          },
+          "interaction": {
+            "SS": 0.229,
+            "df": 8,
+            "F": 0.1521,
+            "p": 0.996448,
+            "eta_squared": 0.0009
+          },
+          "residual": {
+            "SS": 256.8043,
+            "df": 1365
+          }
+        },
+        "CRS": {
+          "metric": "CRS",
+          "factor_a": "scenario",
+          "factor_b": "timestamp_condition",
+          "main_effect_a": {
+            "SS": 0.613,
+            "df": 4,
+            "F": 0.7913,
+            "p": 0.530818,
+            "eta_squared": 0.0023
+          },
+          "main_effect_b": {
+            "SS": 0.0362,
+            "df": 2,
+            "F": 0.0935,
+            "p": 0.910717,
+            "eta_squared": 0.0001
+          },
+          "interaction": {
+            "SS": 0.087,
+            "df": 8,
+            "F": 0.0561,
+            "p": 0.999911,
+            "eta_squared": 0.0003
+          },
+          "residual": {
+            "SS": 264.3913,
+            "df": 1365
+          }
+        },
+        "POS": {
+          "metric": "POS",
+          "factor_a": "scenario",
+          "factor_b": "timestamp_condition",
+          "main_effect_a": {
+            "SS": 13.5841,
+            "df": 4,
+            "F": 16.3606,
+            "p": 0.0,
+            "eta_squared": 0.0457
+          },
+          "main_effect_b": {
+            "SS": 0.0275,
+            "df": 2,
+            "F": 0.0663,
+            "p": 0.935826,
+            "eta_squared": 0.0001
+          },
+          "interaction": {
+            "SS": 0.1899,
+            "df": 8,
+            "F": 0.1143,
+            "p": 0.998724,
+            "eta_squared": 0.0006
+          },
+          "residual": {
+            "SS": 283.337,
+            "df": 1365
+          }
+        }
+      }
+    },
+    "KC": {
+      "n": 330,
+      "anova": {
+        "FA": {
+          "metric": "FA",
+          "factor_a": "scenario",
+          "factor_b": "timestamp_condition",
+          "main_effect_a": {
+            "SS": 0.804,
+            "df": 4,
+            "F": 3.6333,
+            "p": 0.00653,
+            "eta_squared": 0.0441
+          },
+          "main_effect_b": {
+            "SS": 0.0013,
+            "df": 2,
+            "F": 0.012,
+            "p": 0.988055,
+            "eta_squared": 0.0001
+          },
+          "interaction": {
+            "SS": 0.0087,
+            "df": 8,
+            "F": 0.0197,
+            "p": 0.999998,
+            "eta_squared": 0.0005
+          },
+          "residual": {
+            "SS": 17.4252,
+            "df": 315
+          }
+        },
+        "HR": {
+          "metric": "HR",
+          "factor_a": "scenario",
+          "factor_b": "timestamp_condition",
+          "main_effect_a": {
+            "SS": 1.0788,
+            "df": 4,
+            "F": 1.3958,
+            "p": 0.235206,
+            "eta_squared": 0.0174
+          },
+          "main_effect_b": {
+            "SS": 0.0788,
+            "df": 2,
+            "F": 0.2039,
+            "p": 0.815665,
+            "eta_squared": 0.0013
+          },
+          "interaction": {
+            "SS": 0.103,
+            "df": 8,
+            "F": 0.0667,
+            "p": 0.999824,
+            "eta_squared": 0.0017
+          },
+          "residual": {
+            "SS": 60.8636,
+            "df": 315
+          }
+        },
+        "AU": {
+          "metric": "AU",
+          "factor_a": "scenario",
+          "factor_b": "timestamp_condition",
+          "main_effect_a": {
+            "SS": 3.1636,
+            "df": 4,
+            "F": 3.6298,
+            "p": 0.006569,
+            "eta_squared": 0.044
+          },
+          "main_effect_b": {
+            "SS": 0.0424,
+            "df": 2,
+            "F": 0.0974,
+            "p": 0.907265,
+            "eta_squared": 0.0006
+          },
+          "interaction": {
+            "SS": 0.1091,
+            "df": 8,
+            "F": 0.0626,
+            "p": 0.999861,
+            "eta_squared": 0.0015
+          },
+          "residual": {
+            "SS": 68.6364,
+            "df": 315
+          }
+        },
+        "CRS": {
+          "metric": "CRS",
+          "factor_a": "scenario",
+          "factor_b": "timestamp_condition",
+          "main_effect_a": {
+            "SS": 0.9212,
+            "df": 4,
+            "F": 1.0813,
+            "p": 0.365752,
+            "eta_squared": 0.0135
+          },
+          "main_effect_b": {
+            "SS": 0.0182,
+            "df": 2,
+            "F": 0.0427,
+            "p": 0.958221,
+            "eta_squared": 0.0003
+          },
+          "interaction": {
+            "SS": 0.0424,
+            "df": 8,
+            "F": 0.0249,
+            "p": 0.999996,
+            "eta_squared": 0.0006
+          },
+          "residual": {
+            "SS": 67.0909,
+            "df": 315
+          }
+        },
+        "POS": {
+          "metric": "POS",
+          "factor_a": "scenario",
+          "factor_b": "timestamp_condition",
+          "main_effect_a": {
+            "SS": 0.0,
+            "df": 4,
+            "F": 0.0,
+            "p": 1.0,
+            "eta_squared": 0.0
+          },
+          "main_effect_b": {
+            "SS": 0.0,
+            "df": 2,
+            "F": 0.0,
+            "p": 1.0,
+            "eta_squared": 0.0
+          },
+          "interaction": {
+            "SS": 0.0,
+            "df": 8,
+            "F": 0.0,
+            "p": 1.0,
+            "eta_squared": 0.0
+          },
+          "residual": {
+            "SS": 0.0,
+            "df": 315
+          }
+        }
+      }
+    },
+    "PO": {
+      "n": 2220,
+      "anova": {
+        "FA": {
+          "metric": "FA",
+          "factor_a": "scenario",
+          "factor_b": "timestamp_condition",
+          "main_effect_a": {
+            "SS": 3.2099,
+            "df": 4,
+            "F": 10.8422,
+            "p": 0.0,
+            "eta_squared": 0.0193
+          },
+          "main_effect_b": {
+            "SS": 0.01,
+            "df": 2,
+            "F": 0.0677,
+            "p": 0.934507,
+            "eta_squared": 0.0001
+          },
+          "interaction": {
+            "SS": 0.0085,
+            "df": 8,
+            "F": 0.0144,
+            "p": 1.0,
+            "eta_squared": 0.0001
+          },
+          "residual": {
+            "SS": 163.1987,
+            "df": 2205
+          }
+        },
+        "HR": {
+          "metric": "HR",
+          "factor_a": "scenario",
+          "factor_b": "timestamp_condition",
+          "main_effect_a": {
+            "SS": 4.8586,
+            "df": 4,
+            "F": 5.6614,
+            "p": 0.000156,
+            "eta_squared": 0.0102
+          },
+          "main_effect_b": {
+            "SS": 0.0063,
+            "df": 2,
+            "F": 0.0147,
+            "p": 0.985411,
+            "eta_squared": 0.0
+          },
+          "interaction": {
+            "SS": 0.2279,
+            "df": 8,
+            "F": 0.1328,
+            "p": 0.997814,
+            "eta_squared": 0.0005
+          },
+          "residual": {
+            "SS": 473.0743,
+            "df": 2205
+          }
+        },
+        "AU": {
+          "metric": "AU",
+          "factor_a": "scenario",
+          "factor_b": "timestamp_condition",
+          "main_effect_a": {
+            "SS": 8.9847,
+            "df": 4,
+            "F": 10.832,
+            "p": 0.0,
+            "eta_squared": 0.0193
+          },
+          "main_effect_b": {
+            "SS": 0.255,
+            "df": 2,
+            "F": 0.6148,
+            "p": 0.540867,
+            "eta_squared": 0.0005
+          },
+          "interaction": {
+            "SS": 0.1234,
+            "df": 8,
+            "F": 0.0744,
+            "p": 0.999741,
+            "eta_squared": 0.0003
+          },
+          "residual": {
+            "SS": 457.2365,
+            "df": 2205
+          }
+        },
+        "CRS": {
+          "metric": "CRS",
+          "factor_a": "scenario",
+          "factor_b": "timestamp_condition",
+          "main_effect_a": {
+            "SS": 2.6919,
+            "df": 4,
+            "F": 3.2137,
+            "p": 0.012172,
+            "eta_squared": 0.0058
+          },
+          "main_effect_b": {
+            "SS": 0.0604,
+            "df": 2,
+            "F": 0.1441,
+            "p": 0.86579,
+            "eta_squared": 0.0001
+          },
+          "interaction": {
+            "SS": 0.0973,
+            "df": 8,
+            "F": 0.0581,
+            "p": 0.999899,
+            "eta_squared": 0.0002
+          },
+          "residual": {
+            "SS": 461.7432,
+            "df": 2205
+          }
+        },
+        "POS": {
+          "metric": "POS",
+          "factor_a": "scenario",
+          "factor_b": "timestamp_condition",
+          "main_effect_a": {
+            "SS": 3.5018,
+            "df": 4,
+            "F": 5.3558,
+            "p": 0.000272,
+            "eta_squared": 0.0096
+          },
+          "main_effect_b": {
+            "SS": 0.0568,
+            "df": 2,
+            "F": 0.1736,
+            "p": 0.840634,
+            "eta_squared": 0.0002
+          },
+          "interaction": {
+            "SS": 0.1144,
+            "df": 8,
+            "F": 0.0875,
+            "p": 0.999525,
+            "eta_squared": 0.0003
+          },
+          "residual": {
+            "SS": 360.4257,
+            "df": 2205
+          }
+        }
+      }
+    },
+    "TS": {
+      "n": 5685,
+      "anova": {
+        "FA": {
+          "metric": "FA",
+          "factor_a": "scenario",
+          "factor_b": "timestamp_condition",
+          "main_effect_a": {
+            "SS": 10.9969,
+            "df": 4,
+            "F": 38.6598,
+            "p": 0.0,
+            "eta_squared": 0.0265
+          },
+          "main_effect_b": {
+            "SS": 0.0205,
+            "df": 2,
+            "F": 0.1439,
+            "p": 0.865958,
+            "eta_squared": 0.0
+          },
+          "interaction": {
+            "SS": 0.0162,
+            "df": 8,
+            "F": 0.0284,
+            "p": 0.999994,
+            "eta_squared": 0.0
+          },
+          "residual": {
+            "SS": 403.2109,
+            "df": 5670
+          }
+        },
+        "HR": {
+          "metric": "HR",
+          "factor_a": "scenario",
+          "factor_b": "timestamp_condition",
+          "main_effect_a": {
+            "SS": 14.6825,
+            "df": 4,
+            "F": 17.7757,
+            "p": 0.0,
+            "eta_squared": 0.0124
+          },
+          "main_effect_b": {
+            "SS": 0.0172,
+            "df": 2,
+            "F": 0.0417,
+            "p": 0.95912,
+            "eta_squared": 0.0
+          },
+          "interaction": {
+            "SS": 0.0373,
+            "df": 8,
+            "F": 0.0226,
+            "p": 0.999997,
+            "eta_squared": 0.0
+          },
+          "residual": {
+            "SS": 1170.8391,
+            "df": 5670
+          }
+        },
+        "AU": {
+          "metric": "AU",
+          "factor_a": "scenario",
+          "factor_b": "timestamp_condition",
+          "main_effect_a": {
+            "SS": 44.2368,
+            "df": 4,
+            "F": 48.8888,
+            "p": 0.0,
+            "eta_squared": 0.0333
+          },
+          "main_effect_b": {
+            "SS": 0.3339,
+            "df": 2,
+            "F": 0.7379,
+            "p": 0.478143,
+            "eta_squared": 0.0003
+          },
+          "interaction": {
+            "SS": 0.4524,
+            "df": 8,
+            "F": 0.25,
+            "p": 0.980991,
+            "eta_squared": 0.0003
+          },
+          "residual": {
+            "SS": 1282.6174,
+            "df": 5670
+          }
+        },
+        "CRS": {
+          "metric": "CRS",
+          "factor_a": "scenario",
+          "factor_b": "timestamp_condition",
+          "main_effect_a": {
+            "SS": 3.4677,
+            "df": 4,
+            "F": 4.9437,
+            "p": 0.000561,
+            "eta_squared": 0.0035
+          },
+          "main_effect_b": {
+            "SS": 0.0151,
+            "df": 2,
+            "F": 0.0431,
+            "p": 0.957785,
+            "eta_squared": 0.0
+          },
+          "interaction": {
+            "SS": 0.05,
+            "df": 8,
+            "F": 0.0356,
+            "p": 0.999985,
+            "eta_squared": 0.0001
+          },
+          "residual": {
+            "SS": 994.2955,
+            "df": 5670
+          }
+        },
+        "POS": {
+          "metric": "POS",
+          "factor_a": "scenario",
+          "factor_b": "timestamp_condition",
+          "main_effect_a": {
+            "SS": 4.7764,
+            "df": 4,
+            "F": 10.8643,
+            "p": 0.0,
+            "eta_squared": 0.0076
+          },
+          "main_effect_b": {
+            "SS": 0.0732,
+            "df": 2,
+            "F": 0.3329,
+            "p": 0.716869,
+            "eta_squared": 0.0001
+          },
+          "interaction": {
+            "SS": 0.0183,
+            "df": 8,
+            "F": 0.0208,
+            "p": 0.999998,
+            "eta_squared": 0.0
+          },
+          "residual": {
+            "SS": 623.1979,
+            "df": 5670
+          }
+        }
+      }
+    }
+  }
+}

@@ -9,10 +9,10 @@ POS (Preference for Outdated Score).
 Optionally generates predictions by calling an LLM with eval instances.
 
 Usage:
-    python eval_harness.py --instances eval_instances_210.jsonl --predictions predictions.jsonl
-    python eval_harness.py --instances eval_instances_210.jsonl --run-predictions
-    python eval_harness.py --instances eval_instances_210.jsonl --run-predictions --predictions-only
-    python eval_harness.py --instances eval_instances_210.jsonl --run-predictions --model gpt-4o --limit 10
+    python eval_harness.py --instances data/benchmark/eval_instances_210.jsonl --predictions predictions.jsonl
+    python eval_harness.py --instances data/benchmark/eval_instances_210.jsonl --run-predictions
+    python eval_harness.py --instances data/benchmark/eval_instances_210.jsonl --run-predictions --predictions-only
+    python eval_harness.py --instances data/benchmark/eval_instances_210.jsonl --run-predictions --model gpt-4o --limit 10
 """
 
 from __future__ import annotations
@@ -178,10 +178,22 @@ def _init_client():
 
 
 def _build_rag_prompt(instance: dict) -> str:
-    """Build the user prompt with question and retrieved documents."""
+    """Build the user prompt with question and retrieved documents.
+
+    Respects timestamp_condition via display_date:
+      - actual: shows real date
+      - none:   display_date is None → no date shown
+      - misleading: display_date is a swapped date
+    """
     docs_text = []
     for doc in instance["retrieved_docs"]:
-        docs_text.append(f"[Document — {doc['date']}]\n{doc['content']}")
+        # Use display_date if present, otherwise fall back to date
+        date = doc.get("display_date", doc.get("date"))
+        if date is not None:
+            header = f"[Document — {date}]"
+        else:
+            header = "[Document]"
+        docs_text.append(f"{header}\n{doc['content']}")
 
     return (
         f"Documents:\n\n{'\\n\\n'.join(docs_text)}\n\n"
@@ -350,6 +362,16 @@ def aggregate_results(scored: list[dict]) -> dict:
         k: _group_stats(v) for k, v in sorted(by_mechanism.items())
     }
 
+    # By timestamp condition
+    by_ts: dict[str, list[dict]] = defaultdict(list)
+    for item in scored:
+        ts_cond = item.get("timestamp_condition", "actual")
+        by_ts[ts_cond].append(item)
+    if len(by_ts) > 1:
+        report["by_timestamp_condition"] = {
+            k: _group_stats(v) for k, v in sorted(by_ts.items())
+        }
+
     # TGS: compute FA by temporal distance
     # Group instances by the temporal distance of their retrieved docs
     # For S5 instances, use the scenario to infer distance isn't straightforward.
@@ -460,6 +482,7 @@ def evaluate(
                 "instance_id": instance_id,
                 "qa_id": inst["qa_id"],
                 "scenario": inst["scenario"],
+                "timestamp_condition": inst.get("timestamp_condition", "actual"),
                 "domain": inst["domain"],
                 "predicted_mechanism": inst["predicted_mechanism"],
                 "change_type": inst["change_type"],
@@ -522,6 +545,13 @@ def _print_report(report: dict) -> None:
         print(f"{key:<25s} {vals['n']:>5d}  " +
               "  ".join(f"{vals[m]:>6.3f}" for m in metrics))
     print(sep)
+
+    # By timestamp condition
+    if "by_timestamp_condition" in report:
+        for key, vals in sorted(report["by_timestamp_condition"].items()):
+            print(f"ts:{key:<21s} {vals['n']:>5d}  " +
+                  "  ".join(f"{vals[m]:>6.3f}" for m in metrics))
+        print(sep)
 
     # TGS
     tgs = report.get("tgs", {})
