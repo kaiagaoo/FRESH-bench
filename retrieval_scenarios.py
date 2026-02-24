@@ -29,6 +29,7 @@ _DATA_ROOT = _SCRIPT_DIR / "data" / "wikipedia"
 
 _ALL_SCENARIOS = ("S1", "S2", "S3", "S4", "S5")
 _ALL_TS_CONDITIONS = ("actual", "none", "misleading")
+_T_LABEL_RE = re.compile(r"^T([+-]\d+)$")
 
 
 def _strip_wiki_markup(text: str) -> str:
@@ -356,7 +357,99 @@ def generate_eval_instances(
 
 
 # ---------------------------------------------------------------------------
-# 5. CLI
+# 6. Temporal gradient instance generation  (Experiment 4.2)
+# ---------------------------------------------------------------------------
+
+def generate_temporal_gradient_instances(
+    qa_path: Path,
+    data_root: Path = _DATA_ROOT,
+    output_path: Path | None = None,
+    max_doc_chars: int = 2000,
+) -> int:
+    """
+    Generate single-doc eval instances for each QA pair × temporal position.
+
+    Each instance contains exactly one document at a specific temporal distance
+    from the change event (T-4..T+4, excluding T0). Used for Experiment 4.2
+    to measure how FA varies with document age.
+
+    Instance IDs: {qa_id}_TG_{t_label}  (e.g. freshrag_00011_1_TG_T-1)
+    """
+    if output_path is None:
+        stem = qa_path.stem.replace("qa_pairs_", "")
+        output_path = qa_path.parent / f"eval_instances_tg_{stem}.jsonl"
+
+    print(f"Building corpus index from {qa_path}...")
+    corpus = build_corpus(qa_path, data_root)
+    print(f"  Indexed {len(corpus)} documents")
+
+    records: list[dict] = []
+    with open(qa_path, encoding="utf-8") as fh:
+        for line in fh:
+            line = line.strip()
+            if line:
+                records.append(json.loads(line))
+    print(f"  Loaded {len(records)} QA pairs")
+
+    written = 0
+    skipped = 0
+    with open(output_path, "w", encoding="utf-8") as fh:
+        for rec in records:
+            qa_id = rec["qa_id"]
+            tg = rec.get("temporal_gradient", {})
+
+            for t_label, info in sorted(tg.items()):
+                m = _T_LABEL_RE.match(t_label)
+                if not m:
+                    continue  # skip T0 or invalid labels
+                t_offset = int(m.group(1))
+
+                doc_id = info.get("doc_id")
+                if not doc_id:
+                    skipped += 1
+                    continue
+
+                snapshot_path = corpus.get(doc_id)
+                if not snapshot_path:
+                    skipped += 1
+                    continue
+
+                hint = (rec["new_answer"] if info["fact_state"] == "new"
+                        else rec["old_answer"])
+                content = extract_passage(snapshot_path, hint, max_doc_chars)
+
+                instance = {
+                    "instance_id": f"{qa_id}_TG_{t_label}",
+                    "qa_id": qa_id,
+                    "scenario": "TG",
+                    "timestamp_condition": "actual",
+                    "t_label": t_label,
+                    "t_offset": t_offset,
+                    "question": rec["question"],
+                    "new_answer": rec["new_answer"],
+                    "old_answer": rec["old_answer"],
+                    "retrieved_docs": [{
+                        "doc_id": doc_id,
+                        "content": content,
+                        "date": info["date"],
+                        "fact_state": info["fact_state"],
+                        "rank": 1,
+                    }],
+                    "domain": rec["domain"],
+                    "change_type": rec["change_type"],
+                    "predicted_mechanism": rec["predicted_mechanism"],
+                }
+                fh.write(json.dumps(instance, ensure_ascii=False) + "\n")
+                written += 1
+
+    print(f"\nDone. Wrote {written} temporal gradient instances to {output_path}")
+    if skipped:
+        print(f"  ({skipped} positions skipped — no doc or not resolved)")
+    return written
+
+
+# ---------------------------------------------------------------------------
+# 7. CLI
 # ---------------------------------------------------------------------------
 
 def main():
@@ -394,6 +487,11 @@ def main():
         default=None,
         help="Path to data/wikipedia/ directory (default: auto-detect)",
     )
+    parser.add_argument(
+        "--temporal-gradient",
+        action="store_true",
+        help="Generate single-doc temporal gradient instances (Experiment 4.2)",
+    )
 
     args = parser.parse_args()
 
@@ -403,6 +501,15 @@ def main():
 
     output_path = Path(args.output) if args.output else None
     data_root = Path(args.data_root) if args.data_root else _DATA_ROOT
+
+    if args.temporal_gradient:
+        generate_temporal_gradient_instances(
+            qa_path=qa_path,
+            data_root=data_root,
+            output_path=output_path,
+            max_doc_chars=args.max_doc_chars,
+        )
+        return
 
     scenarios = _ALL_SCENARIOS
     if args.scenarios:

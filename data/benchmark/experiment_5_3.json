@@ -1,0 +1,184 @@
+{
+  "experiment": "5.3",
+  "description": "Practical Guidelines for Content Refresh",
+  "guideline_1": {
+    "title": "One fresh document neutralizes staleness",
+    "scenario_means_FA": {
+      "S1": 0.4331,
+      "S2": 0.3344,
+      "S3": 0.4274,
+      "S4": 0.4312,
+      "S5": 0.4318
+    },
+    "TE_S1_vs_S2": 0.0987,
+    "recovery_S3": 94.2,
+    "recovery_S4": 98.1,
+    "recovery_S5": 98.7,
+    "recommendation": "Ensure at least one up-to-date document in every retrieval set. The marginal value of additional fresh documents is negligible (S3 with 2 fresh docs: FA=0.427 vs S5 with 1 fresh doc: FA=0.432). Prioritize breadth of coverage over depth of freshness."
+  },
+  "guideline_2": {
+    "title": "Timestamp metadata has no measurable impact",
+    "timestamp_means_FA": {
+      "actual": 0.4123,
+      "misleading": 0.409,
+      "none": 0.4134
+    },
+    "max_diff": 0.0044,
+    "adversarial_test": {
+      "actual_FA": 0.3347,
+      "misleading_FA": 0.3349,
+      "p": 0.9879988,
+      "significant": false
+    },
+    "recommendation": "Including or omitting document timestamps in retrieval context does not affect model accuracy. Even deliberately misleading timestamps (swapping fresh/stale dates) produce no measurable effect. Models appear to rely on content semantics, not metadata, for temporal reasoning."
+  },
+  "guideline_3": {
+    "title": "Prioritize refreshing science and sports content",
+    "domain_performance": {
+      "organizations": {
+        "FA": 0.4274,
+        "HR": 0.239,
+        "POS": 0.1538,
+        "TE": 0.1215,
+        "n": 975
+      },
+      "people": {
+        "FA": 0.3997,
+        "HR": 0.309,
+        "POS": 0.1271,
+        "TE": 0.0897,
+        "n": 1605
+      },
+      "policy": {
+        "FA": 0.4199,
+        "HR": 0.2883,
+        "POS": 0.1359,
+        "TE": 0.1211,
+        "n": 1155
+      },
+      "products": {
+        "FA": 0.4641,
+        "HR": 0.2667,
+        "POS": 0.1712,
+        "TE": 0.088,
+        "n": 1530
+      },
+      "science_ai_space": {
+        "FA": 0.437,
+        "HR": 0.2625,
+        "POS": 0.1702,
+        "TE": 0.1071,
+        "n": 1680
+      },
+      "science_life_physical": {
+        "FA": 0.3679,
+        "HR": 0.3787,
+        "POS": 0.168,
+        "TE": 0.0837,
+        "n": 1125
+      },
+      "sports": {
+        "FA": 0.3598,
+        "HR": 0.2667,
+        "POS": 0.235,
+        "TE": 0.0893,
+        "n": 1545
+      }
+    },
+    "vulnerability_ranking": {
+      "policy": 0.15601313,
+      "organizations": 0.1505385,
+      "science_ai_space": 0.13521375,
+      "people": 0.1174173,
+      "science_life_physical": 0.11539719,
+      "sports": 0.11311631,
+      "products": 0.11146959999999999
+    },
+    "recommendation": "Content refresh resources should be allocated based on domain vulnerability. Highest priority: policy and organizations (largest staleness effect TE>0.12). science_life_physical has highest hallucination rate (HR=0.38) — stale scientific content is most likely to produce fabricated answers. Sports has highest outdated-preference (POS=0.24) — models stubbornly cling to old sports statistics."
+  },
+  "guideline_4": {
+    "title": "TS and PO mechanisms drive most staleness failures",
+    "mechanism_stats": {
+      "C": {
+        "n": 1380,
+        "proportion": 0.1435,
+        "TE_m": 0.0286,
+        "weighted_contribution": 0.0041,
+        "FA": 0.4749,
+        "POS": 0.3138,
+        "AU": 0.2507
+      },
+      "KC": {
+        "n": 330,
+        "proportion": 0.0343,
+        "TE_m": 0.1075,
+        "weighted_contribution": 0.0037,
+        "FA": 0.4846,
+        "POS": 0.0,
+        "AU": 0.3212
+      },
+      "PO": {
+        "n": 2220,
+        "proportion": 0.2309,
+        "TE_m": 0.1005,
+        "weighted_contribution": 0.0232,
+        "FA": 0.3704,
+        "POS": 0.2068,
+        "AU": 0.3005
+      },
+      "TS": {
+        "n": 5685,
+        "proportion": 0.5913,
+        "TE_m": 0.1145,
+        "weighted_contribution": 0.0677,
+        "FA": 0.408,
+        "POS": 0.1265,
+        "AU": 0.3717
+      }
+    },
+    "recommendation": "Two mechanisms account for 92% of the staleness effect: Temporal Sensitivity (TS, 69%) and Preference for Outdated (PO, 24%). For TS-type questions (time-sensitive facts like dates, standings, prices), always retrieve the freshest available document. For PO-type questions (where old answers feel authoritative), consider explicitly flagging content age in system prompts or using recency-weighted retrieval scoring."
+  },
+  "guideline_5": {
+    "title": "Freshness effect is a step function at the change boundary",
+    "stale_mean_FA": 0.3312,
+    "fresh_mean_FA": 0.4219,
+    "step_size": 0.0907,
+    "stale_positions": {
+      "T-4": 0.3231,
+      "T-3": 0.3335,
+      "T-2": 0.323,
+      "T-1": 0.338
+    },
+    "fresh_positions": {
+      "T+1": 0.4418,
+      "T+2": 0.4206,
+      "T+3": 0.3886,
+      "T+4": 0.4048
+    },
+    "within_stale_range": 0.015,
+    "within_fresh_range": 0.0532,
+    "recommendation": "Document age within stale or fresh categories barely matters — the critical factor is whether the document was captured before or after the factual change. A 6-month-old fresh document is just as good as a 1-month-old one. Implication: refresh frequency should be event-driven (triggered by known factual changes), not calendar-driven."
+  },
+  "decision_matrix": {
+    "high_priority_refresh": {
+      "condition": "TS or PO mechanism, policy/organizations/science domain",
+      "action": "Refresh immediately upon detecting factual change",
+      "expected_FA_gain": "+0.099 (full TE recovery)"
+    },
+    "medium_priority_refresh": {
+      "condition": "Any domain, mixed retrieval possible",
+      "action": "Ensure at least 1 fresh document in retrieval set",
+      "expected_FA_gain": "+0.097 (98.7% recovery)"
+    },
+    "low_priority": {
+      "condition": "C mechanism, products domain",
+      "action": "Standard refresh cycle sufficient",
+      "rationale": "C mechanism shows smallest staleness effect; products domain has highest base FA"
+    },
+    "not_needed": {
+      "condition": "Timestamp metadata updates",
+      "action": "No action needed",
+      "rationale": "Timestamps have zero measurable impact on model performance"
+    }
+  }
+}

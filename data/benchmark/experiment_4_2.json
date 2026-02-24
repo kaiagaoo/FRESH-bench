@@ -1,0 +1,412 @@
+{
+  "experiment": "4.2",
+  "description": "Temporal Gradient",
+  "overall_regression": {
+    "n": 3137,
+    "slope": 0.017092,
+    "intercept": 0.376677,
+    "r": 0.1499,
+    "r_squared": 0.0225,
+    "p": 0.0,
+    "se_slope": 0.002013
+  },
+  "position_means": {
+    "T-4": {
+      "t_offset": -4,
+      "mean_FA": 0.3231,
+      "std_FA": 0.1856,
+      "n": 141
+    },
+    "T-3": {
+      "t_offset": -3,
+      "mean_FA": 0.3335,
+      "std_FA": 0.2218,
+      "n": 319
+    },
+    "T-2": {
+      "t_offset": -2,
+      "mean_FA": 0.323,
+      "std_FA": 0.2207,
+      "n": 477
+    },
+    "T-1": {
+      "t_offset": -1,
+      "mean_FA": 0.338,
+      "std_FA": 0.2305,
+      "n": 641
+    },
+    "T+1": {
+      "t_offset": 1,
+      "mean_FA": 0.4418,
+      "std_FA": 0.2747,
+      "n": 641
+    },
+    "T+2": {
+      "t_offset": 2,
+      "mean_FA": 0.4206,
+      "std_FA": 0.2746,
+      "n": 488
+    },
+    "T+3": {
+      "t_offset": 3,
+      "mean_FA": 0.3886,
+      "std_FA": 0.2525,
+      "n": 293
+    },
+    "T+4": {
+      "t_offset": 4,
+      "mean_FA": 0.4048,
+      "std_FA": 0.239,
+      "n": 137
+    }
+  },
+  "anova_positions": {
+    "F": 16.899,
+    "p": 0.0,
+    "k": 8
+  },
+  "stale_regression": {
+    "n": 1578,
+    "slope": 0.003885,
+    "intercept": 0.33888,
+    "r": 0.0172,
+    "r_squared": 0.0003,
+    "p": 0.49478936,
+    "se_slope": 0.005689
+  },
+  "fresh_regression": {
+    "n": 1559,
+    "slope": -0.01842,
+    "intercept": 0.457877,
+    "r": -0.0669,
+    "r_squared": 0.0045,
+    "p": 0.00821253,
+    "se_slope": 0.00696
+  },
+  "stale_vs_fresh": {
+    "stale_mean_FA": 0.3312,
+    "fresh_mean_FA": 0.4219,
+    "diff": 0.0907,
+    "t_stat": -10.3136,
+    "p": 0.0
+  },
+  "metric_regressions": {
+    "FA": {
+      "n": 3137,
+      "slope": 0.017092,
+      "intercept": 0.376677,
+      "r": 0.1499,
+      "r_squared": 0.0225,
+      "p": 0.0,
+      "se_slope": 0.002013
+    },
+    "HR": {
+      "n": 3137,
+      "slope": -0.01341,
+      "intercept": 0.340782,
+      "r": -0.0621,
+      "r_squared": 0.0039,
+      "p": 0.0005062,
+      "se_slope": 0.003852
+    },
+    "AU": {
+      "n": 3137,
+      "slope": -0.036253,
+      "intercept": 0.46745,
+      "r": -0.1594,
+      "r_squared": 0.0254,
+      "p": 0.0,
+      "se_slope": 0.004011
+    },
+    "CRS": {
+      "n": 3137,
+      "slope": -0.016353,
+      "intercept": 0.334658,
+      "r": -0.076,
+      "r_squared": 0.0058,
+      "p": 2.031e-05,
+      "se_slope": 0.003832
+    },
+    "POS": {
+      "n": 3137,
+      "slope": -0.017084,
+      "intercept": 0.167603,
+      "r": -0.1002,
+      "r_squared": 0.01,
+      "p": 2e-08,
+      "se_slope": 0.003028
+    }
+  },
+  "by_mechanism": {
+    "C": {
+      "n": 450,
+      "regression": {
+        "n": 450,
+        "slope": 0.014105,
+        "intercept": 0.440875,
+        "r": 0.1182,
+        "r_squared": 0.014,
+        "p": 0.01206474,
+        "se_slope": 0.005596
+      },
+      "position_means": {
+        "T-4": {
+          "mean_FA": 0.3638,
+          "n": 14
+        },
+        "T-3": {
+          "mean_FA": 0.3948,
+          "n": 47
+        },
+        "T-2": {
+          "mean_FA": 0.3944,
+          "n": 72
+        },
+        "T-1": {
+          "mean_FA": 0.4405,
+          "n": 92
+        },
+        "T+1": {
+          "mean_FA": 0.4766,
+          "n": 92
+        },
+        "T+2": {
+          "mean_FA": 0.4765,
+          "n": 75
+        },
+        "T+3": {
+          "mean_FA": 0.4344,
+          "n": 40
+        },
+        "T+4": {
+          "mean_FA": 0.4931,
+          "n": 18
+        }
+      }
+    },
+    "KC": {
+      "n": 108,
+      "regression": {
+        "n": 108,
+        "slope": 0.017015,
+        "intercept": 0.442632,
+        "r": 0.1658,
+        "r_squared": 0.0275,
+        "p": 0.08645079,
+        "se_slope": 0.009832
+      },
+      "position_means": {
+        "T-4": {
+          "mean_FA": 0.4712,
+          "n": 6
+        },
+        "T-3": {
+          "mean_FA": 0.4137,
+          "n": 9
+        },
+        "T-2": {
+          "mean_FA": 0.3972,
+          "n": 15
+        },
+        "T-1": {
+          "mean_FA": 0.3536,
+          "n": 22
+        },
+        "T+1": {
+          "mean_FA": 0.5046,
+          "n": 22
+        },
+        "T+2": {
+          "mean_FA": 0.4928,
+          "n": 16
+        },
+        "T+3": {
+          "mean_FA": 0.4503,
+          "n": 13
+        },
+        "T+4": {
+          "mean_FA": 0.5694,
+          "n": 5
+        }
+      }
+    },
+    "PO": {
+      "n": 730,
+      "regression": {
+        "n": 730,
+        "slope": 0.016034,
+        "intercept": 0.341855,
+        "r": 0.1391,
+        "r_squared": 0.0193,
+        "p": 0.00016353,
+        "se_slope": 0.004231
+      },
+      "position_means": {
+        "T-4": {
+          "mean_FA": 0.3196,
+          "n": 31
+        },
+        "T-3": {
+          "mean_FA": 0.3034,
+          "n": 73
+        },
+        "T-2": {
+          "mean_FA": 0.2798,
+          "n": 109
+        },
+        "T-1": {
+          "mean_FA": 0.2994,
+          "n": 148
+        },
+        "T+1": {
+          "mean_FA": 0.4076,
+          "n": 148
+        },
+        "T+2": {
+          "mean_FA": 0.3943,
+          "n": 115
+        },
+        "T+3": {
+          "mean_FA": 0.3481,
+          "n": 70
+        },
+        "T+4": {
+          "mean_FA": 0.3615,
+          "n": 36
+        }
+      }
+    },
+    "TS": {
+      "n": 1849,
+      "regression": {
+        "n": 1849,
+        "slope": 0.01815,
+        "intercept": 0.371025,
+        "r": 0.1631,
+        "r_squared": 0.0266,
+        "p": 0.0,
+        "se_slope": 0.002554
+      },
+      "position_means": {
+        "T-4": {
+          "mean_FA": 0.308,
+          "n": 90
+        },
+        "T-3": {
+          "mean_FA": 0.3261,
+          "n": 190
+        },
+        "T-2": {
+          "mean_FA": 0.3175,
+          "n": 281
+        },
+        "T-1": {
+          "mean_FA": 0.3273,
+          "n": 379
+        },
+        "T+1": {
+          "mean_FA": 0.4431,
+          "n": 379
+        },
+        "T+2": {
+          "mean_FA": 0.4123,
+          "n": 282
+        },
+        "T+3": {
+          "mean_FA": 0.3897,
+          "n": 170
+        },
+        "T+4": {
+          "mean_FA": 0.3938,
+          "n": 78
+        }
+      }
+    }
+  },
+  "by_domain": {
+    "organizations": {
+      "n": 325,
+      "regression": {
+        "n": 325,
+        "slope": 0.019769,
+        "intercept": 0.37477,
+        "r": 0.1862,
+        "r_squared": 0.0347,
+        "p": 0.00074192,
+        "se_slope": 0.005804
+      }
+    },
+    "people": {
+      "n": 535,
+      "regression": {
+        "n": 535,
+        "slope": 0.010701,
+        "intercept": 0.358861,
+        "r": 0.0927,
+        "r_squared": 0.0086,
+        "p": 0.03212308,
+        "se_slope": 0.004981
+      }
+    },
+    "policy": {
+      "n": 385,
+      "regression": {
+        "n": 385,
+        "slope": 0.016204,
+        "intercept": 0.364897,
+        "r": 0.1609,
+        "r_squared": 0.0259,
+        "p": 0.00153891,
+        "se_slope": 0.005079
+      }
+    },
+    "products": {
+      "n": 471,
+      "regression": {
+        "n": 471,
+        "slope": 0.020314,
+        "intercept": 0.425812,
+        "r": 0.1553,
+        "r_squared": 0.0241,
+        "p": 0.0007178,
+        "se_slope": 0.005965
+      }
+    },
+    "science_ai_space": {
+      "n": 537,
+      "regression": {
+        "n": 537,
+        "slope": 0.010474,
+        "intercept": 0.386899,
+        "r": 0.0911,
+        "r_squared": 0.0083,
+        "p": 0.03476658,
+        "se_slope": 0.004949
+      }
+    },
+    "science_life_physical": {
+      "n": 369,
+      "regression": {
+        "n": 369,
+        "slope": 0.030287,
+        "intercept": 0.359734,
+        "r": 0.2632,
+        "r_squared": 0.0693,
+        "p": 2.9e-07,
+        "se_slope": 0.005795
+      }
+    },
+    "sports": {
+      "n": 515,
+      "regression": {
+        "n": 515,
+        "slope": 0.015768,
+        "intercept": 0.361599,
+        "r": 0.1474,
+        "r_squared": 0.0217,
+        "p": 0.00079551,
+        "se_slope": 0.004673
+      }
+    }
+  }
+}

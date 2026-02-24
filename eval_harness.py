@@ -493,6 +493,11 @@ def evaluate(
                 "scores": scores,
                 "retrieved_docs": inst.get("retrieved_docs", []),
             }
+            # Temporal gradient fields (Experiment 4.2)
+            if "t_label" in inst:
+                record["t_label"] = inst["t_label"]
+            if "t_offset" in inst:
+                record["t_offset"] = inst["t_offset"]
             scored.append(record)
             fh.write(json.dumps(record, ensure_ascii=False) + "\n")
 

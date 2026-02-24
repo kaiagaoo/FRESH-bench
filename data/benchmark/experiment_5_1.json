@@ -1,0 +1,216 @@
+{
+  "experiment": "5.1",
+  "description": "Causal Effect Decomposition",
+  "total_effect": {
+    "TE": 0.098708,
+    "S1_mean_FA": 0.4331,
+    "S2_mean_FA": 0.3344,
+    "n_S1": 1923,
+    "n_S2": 1923,
+    "TE_FA": 0.098708,
+    "TE_HR": -0.072283,
+    "TE_AU": -0.132605,
+    "TE_CRS": -0.076443,
+    "TE_POS": -0.121165
+  },
+  "mechanism_decomposition": {
+    "C": {
+      "n": 276,
+      "w": 0.1435,
+      "S1_mean_FA": 0.4714,
+      "S2_mean_FA": 0.4429,
+      "TE_m": 0.028563,
+      "IE_m": 0.0041,
+      "pct_of_TE": 4.15,
+      "t_stat": 1.281,
+      "p": 0.20072844,
+      "metric_TE": {
+        "FA": 0.028563,
+        "HR": 0.054348,
+        "AU": 0.021739,
+        "CRS": -0.065217,
+        "POS": -0.278986
+      }
+    },
+    "KC": {
+      "n": 66,
+      "w": 0.0343,
+      "S1_mean_FA": 0.4955,
+      "S2_mean_FA": 0.3879,
+      "TE_m": 0.107545,
+      "IE_m": 0.003691,
+      "pct_of_TE": 3.74,
+      "t_stat": 2.7227,
+      "p": 0.00737034,
+      "metric_TE": {
+        "FA": 0.107545,
+        "HR": -0.075758,
+        "AU": -0.151515,
+        "CRS": -0.151515,
+        "POS": 0.0
+      }
+    },
+    "PO": {
+      "n": 444,
+      "w": 0.2309,
+      "S1_mean_FA": 0.3956,
+      "S2_mean_FA": 0.2951,
+      "TE_m": 0.100534,
+      "IE_m": 0.023212,
+      "pct_of_TE": 23.52,
+      "t_stat": 5.8787,
+      "p": 1e-08,
+      "metric_TE": {
+        "FA": 0.100534,
+        "HR": -0.081081,
+        "AU": -0.096847,
+        "CRS": -0.09009,
+        "POS": -0.119369
+      }
+    },
+    "TS": {
+      "n": 1137,
+      "w": 0.5913,
+      "S1_mean_FA": 0.4348,
+      "S2_mean_FA": 0.3203,
+      "TE_m": 0.114509,
+      "IE_m": 0.067705,
+      "pct_of_TE": 68.59,
+      "t_stat": 10.9844,
+      "p": 0.0,
+      "metric_TE": {
+        "FA": 0.114509,
+        "HR": -0.099384,
+        "AU": -0.182938,
+        "CRS": -0.069481,
+        "POS": -0.090589
+      }
+    }
+  },
+  "ie_sum": 0.098708,
+  "decomposition_check": 0.0,
+  "mediation": {
+    "c_total": -0.098708,
+    "c_total_p": 0.0,
+    "direct_effect": -0.078812,
+    "pct_direct": 79.84,
+    "pathways": {
+      "PO": {
+        "mediator": "POS",
+        "path_a_slope": 0.121165,
+        "path_a_p": 0.0,
+        "path_b_slope": -0.083549,
+        "path_b_se": 0.010836,
+        "IE": -0.010123,
+        "pct_of_TE": -10.26,
+        "sobel_z": -6.1091,
+        "sobel_p": 0.0
+      },
+      "KC": {
+        "mediator": "CRS",
+        "path_a_slope": 0.076443,
+        "path_a_p": 4.8e-07,
+        "path_b_slope": 0.169825,
+        "path_b_se": 0.008278,
+        "IE": 0.012982,
+        "pct_of_TE": 13.15,
+        "sobel_z": 4.8985,
+        "sobel_p": 9.7e-07
+      },
+      "TS": {
+        "mediator": "AU",
+        "path_a_slope": 0.132605,
+        "path_a_p": 0.0,
+        "path_b_slope": -0.171597,
+        "path_b_se": 0.007936,
+        "IE": -0.022755,
+        "pct_of_TE": -23.05,
+        "sobel_z": -7.8582,
+        "sobel_p": 0.0
+      }
+    },
+    "total_IE_mediated": -0.019896,
+    "pct_mediated": 20.16
+  },
+  "mixed_scenario_effects": {
+    "S3": {
+      "mean_FA": 0.4274,
+      "n": 1923,
+      "gap_vs_S1": 0.00563,
+      "gap_vs_S2": 0.093078,
+      "recovery_pct": 94.3
+    },
+    "S4": {
+      "mean_FA": 0.4312,
+      "n": 1923,
+      "gap_vs_S1": 0.001849,
+      "gap_vs_S2": 0.096859,
+      "recovery_pct": 98.13
+    },
+    "S5": {
+      "mean_FA": 0.4318,
+      "n": 1923,
+      "gap_vs_S1": 0.001312,
+      "gap_vs_S2": 0.097396,
+      "recovery_pct": 98.67
+    }
+  },
+  "domain_decomposition": {
+    "organizations": {
+      "TE": 0.121528,
+      "S1_mean_FA": 0.4503,
+      "S2_mean_FA": 0.3288,
+      "n_S1": 195,
+      "t_stat": 5.0925,
+      "p": 5.6e-07
+    },
+    "people": {
+      "TE": 0.089673,
+      "S1_mean_FA": 0.4163,
+      "S2_mean_FA": 0.3266,
+      "n_S1": 321,
+      "t_stat": 4.2415,
+      "p": 2.559e-05
+    },
+    "policy": {
+      "TE": 0.121148,
+      "S1_mean_FA": 0.447,
+      "S2_mean_FA": 0.3258,
+      "n_S1": 231,
+      "t_stat": 5.5288,
+      "p": 6e-08
+    },
+    "products": {
+      "TE": 0.088043,
+      "S1_mean_FA": 0.4845,
+      "S2_mean_FA": 0.3964,
+      "n_S1": 306,
+      "t_stat": 3.8072,
+      "p": 0.00015489
+    },
+    "science_ai_space": {
+      "TE": 0.10713,
+      "S1_mean_FA": 0.4516,
+      "S2_mean_FA": 0.3444,
+      "n_S1": 336,
+      "t_stat": 5.6401,
+      "p": 3e-08
+    },
+    "science_life_physical": {
+      "TE": 0.083665,
+      "S1_mean_FA": 0.39,
+      "S2_mean_FA": 0.3063,
+      "n_S1": 225,
+      "t_stat": 3.4651,
+      "p": 0.00058315
+    },
+    "sports": {
+      "TE": 0.089275,
+      "S1_mean_FA": 0.3896,
+      "S2_mean_FA": 0.3003,
+      "n_S1": 309,
+      "t_stat": 4.9321,
+      "p": 1.06e-06
+    }
+  }
+}

@@ -1,0 +1,405 @@
+{
+  "experiment": "5.2",
+  "description": "Mechanism Hypothesis Validation",
+  "mechanism_profiles": {
+    "C": {
+      "n": 1380,
+      "FA": {
+        "mean": 0.4749,
+        "std": 0.2577
+      },
+      "HR": {
+        "mean": 0.2058,
+        "std": 0.4044
+      },
+      "AU": {
+        "mean": 0.2507,
+        "std": 0.4336
+      },
+      "CRS": {
+        "mean": 0.7406,
+        "std": 0.4385
+      },
+      "POS": {
+        "mean": 0.3138,
+        "std": 0.4642
+      },
+      "by_scenario": {
+        "S1": {
+          "FA": 0.4714,
+          "HR": 0.2572,
+          "AU": 0.308,
+          "CRS": 0.7029,
+          "POS": 0.1993,
+          "n": 276
+        },
+        "S2": {
+          "FA": 0.4429,
+          "HR": 0.2029,
+          "AU": 0.2862,
+          "CRS": 0.7681,
+          "POS": 0.4783,
+          "n": 276
+        },
+        "S3": {
+          "FA": 0.4816,
+          "HR": 0.2029,
+          "AU": 0.2246,
+          "CRS": 0.7464,
+          "POS": 0.2391,
+          "n": 276
+        },
+        "S4": {
+          "FA": 0.4915,
+          "HR": 0.1993,
+          "AU": 0.2283,
+          "CRS": 0.7428,
+          "POS": 0.2862,
+          "n": 276
+        },
+        "S5": {
+          "FA": 0.4868,
+          "HR": 0.1667,
+          "AU": 0.2065,
+          "CRS": 0.7428,
+          "POS": 0.3659,
+          "n": 276
+        }
+      }
+    },
+    "KC": {
+      "n": 330,
+      "FA": {
+        "mean": 0.4846,
+        "std": 0.2355
+      },
+      "HR": {
+        "mean": 0.2515,
+        "std": 0.4345
+      },
+      "AU": {
+        "mean": 0.3212,
+        "std": 0.4677
+      },
+      "CRS": {
+        "mean": 0.2909,
+        "std": 0.4549
+      },
+      "POS": {
+        "mean": 0.0,
+        "std": 0.0
+      },
+      "by_scenario": {
+        "S1": {
+          "FA": 0.4955,
+          "HR": 0.2727,
+          "AU": 0.3485,
+          "CRS": 0.2424,
+          "POS": 0.0,
+          "n": 66
+        },
+        "S2": {
+          "FA": 0.3879,
+          "HR": 0.3485,
+          "AU": 0.5,
+          "CRS": 0.3939,
+          "POS": 0.0,
+          "n": 66
+        },
+        "S3": {
+          "FA": 0.5073,
+          "HR": 0.2121,
+          "AU": 0.2727,
+          "CRS": 0.2727,
+          "POS": 0.0,
+          "n": 66
+        },
+        "S4": {
+          "FA": 0.5263,
+          "HR": 0.1818,
+          "AU": 0.2273,
+          "CRS": 0.2727,
+          "POS": 0.0,
+          "n": 66
+        },
+        "S5": {
+          "FA": 0.506,
+          "HR": 0.2424,
+          "AU": 0.2576,
+          "CRS": 0.2727,
+          "POS": 0.0,
+          "n": 66
+        }
+      }
+    },
+    "PO": {
+      "n": 2220,
+      "FA": {
+        "mean": 0.3704,
+        "std": 0.2739
+      },
+      "HR": {
+        "mean": 0.314,
+        "std": 0.4642
+      },
+      "AU": {
+        "mean": 0.3005,
+        "std": 0.4586
+      },
+      "CRS": {
+        "mean": 0.2982,
+        "std": 0.4576
+      },
+      "POS": {
+        "mean": 0.2068,
+        "std": 0.4051
+      },
+      "by_scenario": {
+        "S1": {
+          "FA": 0.3956,
+          "HR": 0.3176,
+          "AU": 0.3198,
+          "CRS": 0.277,
+          "POS": 0.1599,
+          "n": 444
+        },
+        "S2": {
+          "FA": 0.2951,
+          "HR": 0.3986,
+          "AU": 0.4167,
+          "CRS": 0.3671,
+          "POS": 0.2793,
+          "n": 444
+        },
+        "S3": {
+          "FA": 0.3801,
+          "HR": 0.3108,
+          "AU": 0.2432,
+          "CRS": 0.2793,
+          "POS": 0.1959,
+          "n": 444
+        },
+        "S4": {
+          "FA": 0.3921,
+          "HR": 0.2793,
+          "AU": 0.2635,
+          "CRS": 0.2905,
+          "POS": 0.1892,
+          "n": 444
+        },
+        "S5": {
+          "FA": 0.3892,
+          "HR": 0.2635,
+          "AU": 0.259,
+          "CRS": 0.277,
+          "POS": 0.2095,
+          "n": 444
+        }
+      }
+    },
+    "TS": {
+      "n": 5685,
+      "FA": {
+        "mean": 0.408,
+        "std": 0.27
+      },
+      "HR": {
+        "mean": 0.2964,
+        "std": 0.4567
+      },
+      "AU": {
+        "mean": 0.3717,
+        "std": 0.4833
+      },
+      "CRS": {
+        "mean": 0.2271,
+        "std": 0.419
+      },
+      "POS": {
+        "mean": 0.1265,
+        "std": 0.3324
+      },
+      "by_scenario": {
+        "S1": {
+          "FA": 0.4348,
+          "HR": 0.2955,
+          "AU": 0.3615,
+          "CRS": 0.2058,
+          "POS": 0.0827,
+          "n": 1137
+        },
+        "S2": {
+          "FA": 0.3203,
+          "HR": 0.3949,
+          "AU": 0.5444,
+          "CRS": 0.2753,
+          "POS": 0.1733,
+          "n": 1137
+        },
+        "S3": {
+          "FA": 0.4281,
+          "HR": 0.2682,
+          "AU": 0.3157,
+          "CRS": 0.2137,
+          "POS": 0.1196,
+          "n": 1137
+        },
+        "S4": {
+          "FA": 0.4263,
+          "HR": 0.2603,
+          "AU": 0.3096,
+          "CRS": 0.219,
+          "POS": 0.124,
+          "n": 1137
+        },
+        "S5": {
+          "FA": 0.4307,
+          "HR": 0.263,
+          "AU": 0.3272,
+          "CRS": 0.2216,
+          "POS": 0.1328,
+          "n": 1137
+        }
+      }
+    }
+  },
+  "hypothesis_tests": {
+    "KC": {
+      "H1_higher_CRS_mixed": {
+        "description": "KC has higher CRS in mixed scenarios (S3-S5)",
+        "KC_mean": 0.2727,
+        "other_mean": 0.3116,
+        "diff": -0.0389,
+        "t_stat": -1.2027,
+        "p": 0.23042099,
+        "confirmed": false
+      },
+      "H2_higher_HR_S2": {
+        "description": "KC has higher HR in stale-only (S2)",
+        "KC_mean": 0.3485,
+        "other_mean": 0.3673,
+        "diff": -0.0188,
+        "t_stat": -0.3121,
+        "p": 0.7558837,
+        "confirmed": false
+      }
+    },
+    "TS": {
+      "H1_higher_AU": {
+        "description": "TS has higher AU (uncertainty) overall",
+        "TS_mean": 0.3717,
+        "other_mean": 0.2847,
+        "diff": 0.0869,
+        "t_stat": 9.0198,
+        "p": 0.0,
+        "confirmed": true
+      },
+      "H2_larger_staleness_gap": {
+        "description": "TS has larger S1-S2 FA gap (more temporally sensitive)",
+        "TS_gap": 0.1145,
+        "other_gap": 0.0759,
+        "gap_diff": 0.0387,
+        "confirmed": true
+      }
+    },
+    "PO": {
+      "H1_higher_POS_S2": {
+        "description": "PO has higher POS in stale-only (S2)",
+        "PO_mean": 0.2793,
+        "other_mean": 0.2224,
+        "diff": 0.0568,
+        "t_stat": 2.3775,
+        "p": 0.01770207,
+        "confirmed": true
+      },
+      "H2_higher_POS_S4_vs_S3": {
+        "description": "PO has higher POS in stale-dominant (S4) vs fresh-dominant (S3)",
+        "PO_S4_mean": 0.1892,
+        "PO_S3_mean": 0.1959,
+        "diff": -0.0068,
+        "t_stat": -0.255,
+        "p": 0.79875679,
+        "confirmed": false
+      },
+      "H3_higher_POS_overall": {
+        "description": "PO has higher POS overall vs other mechanisms",
+        "PO_mean": 0.2068,
+        "other_mean": 0.1558,
+        "diff": 0.051,
+        "t_stat": 5.3234,
+        "p": 1.1e-07,
+        "confirmed": true
+      }
+    },
+    "C": {
+      "H1_lowest_FA": {
+        "description": "C (compound) has lower FA than single-mechanism instances",
+        "C_mean": 0.4749,
+        "other_mean": 0.401,
+        "diff": 0.0739,
+        "t_stat": 9.7825,
+        "p": 0.0,
+        "confirmed": false
+      },
+      "H2_highest_CRS": {
+        "description": "C has higher CRS (more change recognition)",
+        "C_mean": 0.7406,
+        "other_mean": 0.2488,
+        "diff": 0.4918,
+        "t_stat": 38.6344,
+        "p": 0.0,
+        "confirmed": true
+      }
+    }
+  },
+  "discriminant_validity": {
+    "FA": {
+      "F": 51.5664,
+      "p": 0.0,
+      "eta_squared": 0.0158
+    },
+    "HR": {
+      "F": 19.0757,
+      "p": 0.0,
+      "eta_squared": 0.0059
+    },
+    "AU": {
+      "F": 30.3721,
+      "p": 0.0,
+      "eta_squared": 0.0094
+    },
+    "CRS": {
+      "F": 525.4535,
+      "p": 0.0,
+      "eta_squared": 0.1409
+    },
+    "POS": {
+      "F": 128.6458,
+      "p": 0.0,
+      "eta_squared": 0.0386
+    }
+  },
+  "confirmation_summary": {
+    "KC": {
+      "total": 2,
+      "confirmed": 0
+    },
+    "TS": {
+      "total": 2,
+      "confirmed": 2
+    },
+    "PO": {
+      "total": 3,
+      "confirmed": 2
+    },
+    "C": {
+      "total": 2,
+      "confirmed": 1
+    },
+    "overall": {
+      "total": 9,
+      "confirmed": 5,
+      "rate": 0.5556
+    }
+  }
+}

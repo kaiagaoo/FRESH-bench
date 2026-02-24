@@ -1,0 +1,691 @@
+{
+  "experiment": "4.3",
+  "description": "Domain Heterogeneity",
+  "domain_anova": {
+    "FA": {
+      "F": 28.2114,
+      "p": 0.0,
+      "eta_squared": 0.0173,
+      "kruskal_H": 148.2659,
+      "kruskal_p": 0.0
+    },
+    "HR": {
+      "F": 12.1245,
+      "p": 0.0,
+      "eta_squared": 0.0075,
+      "kruskal_H": 72.2452,
+      "kruskal_p": 0.0
+    },
+    "AU": {
+      "F": 71.2325,
+      "p": 0.0,
+      "eta_squared": 0.0426,
+      "kruskal_H": 409.4484,
+      "kruskal_p": 0.0
+    },
+    "CRS": {
+      "F": 26.2849,
+      "p": 0.0,
+      "eta_squared": 0.0161,
+      "kruskal_H": 155.2594,
+      "kruskal_p": 0.0
+    },
+    "POS": {
+      "F": 13.2624,
+      "p": 0.0,
+      "eta_squared": 0.0082,
+      "kruskal_H": 78.9699,
+      "kruskal_p": 0.0
+    }
+  },
+  "domain_stats": {
+    "organizations": {
+      "n": 975,
+      "FA": {
+        "mean": 0.4274,
+        "std": 0.2575,
+        "median": 0.4
+      },
+      "HR": {
+        "mean": 0.239,
+        "std": 0.4267,
+        "median": 0.0
+      },
+      "AU": {
+        "mean": 0.4523,
+        "std": 0.498,
+        "median": 0.0
+      },
+      "CRS": {
+        "mean": 0.4215,
+        "std": 0.4941,
+        "median": 0.0
+      },
+      "POS": {
+        "mean": 0.1538,
+        "std": 0.361,
+        "median": 0.0
+      }
+    },
+    "people": {
+      "n": 1605,
+      "FA": {
+        "mean": 0.3997,
+        "std": 0.2876,
+        "median": 0.3913
+      },
+      "HR": {
+        "mean": 0.309,
+        "std": 0.4622,
+        "median": 0.0
+      },
+      "AU": {
+        "mean": 0.3938,
+        "std": 0.4887,
+        "median": 0.0
+      },
+      "CRS": {
+        "mean": 0.2822,
+        "std": 0.4502,
+        "median": 0.0
+      },
+      "POS": {
+        "mean": 0.1271,
+        "std": 0.3332,
+        "median": 0.0
+      }
+    },
+    "policy": {
+      "n": 1155,
+      "FA": {
+        "mean": 0.4199,
+        "std": 0.2553,
+        "median": 0.4
+      },
+      "HR": {
+        "mean": 0.2883,
+        "std": 0.4532,
+        "median": 0.0
+      },
+      "AU": {
+        "mean": 0.4147,
+        "std": 0.4929,
+        "median": 0.0
+      },
+      "CRS": {
+        "mean": 0.2762,
+        "std": 0.4473,
+        "median": 0.0
+      },
+      "POS": {
+        "mean": 0.1359,
+        "std": 0.3429,
+        "median": 0.0
+      }
+    },
+    "products": {
+      "n": 1530,
+      "FA": {
+        "mean": 0.4641,
+        "std": 0.2917,
+        "median": 0.406
+      },
+      "HR": {
+        "mean": 0.2667,
+        "std": 0.4424,
+        "median": 0.0
+      },
+      "AU": {
+        "mean": 0.268,
+        "std": 0.443,
+        "median": 0.0
+      },
+      "CRS": {
+        "mean": 0.4007,
+        "std": 0.4902,
+        "median": 0.0
+      },
+      "POS": {
+        "mean": 0.1712,
+        "std": 0.3768,
+        "median": 0.0
+      }
+    },
+    "science_ai_space": {
+      "n": 1680,
+      "FA": {
+        "mean": 0.437,
+        "std": 0.263,
+        "median": 0.4138
+      },
+      "HR": {
+        "mean": 0.2625,
+        "std": 0.4401,
+        "median": 0.0
+      },
+      "AU": {
+        "mean": 0.1827,
+        "std": 0.3866,
+        "median": 0.0
+      },
+      "CRS": {
+        "mean": 0.2601,
+        "std": 0.4388,
+        "median": 0.0
+      },
+      "POS": {
+        "mean": 0.1702,
+        "std": 0.376,
+        "median": 0.0
+      }
+    },
+    "science_life_physical": {
+      "n": 1125,
+      "FA": {
+        "mean": 0.3679,
+        "std": 0.274,
+        "median": 0.3043
+      },
+      "HR": {
+        "mean": 0.3787,
+        "std": 0.4853,
+        "median": 0.0
+      },
+      "AU": {
+        "mean": 0.2658,
+        "std": 0.4419,
+        "median": 0.0
+      },
+      "CRS": {
+        "mean": 0.2738,
+        "std": 0.4461,
+        "median": 0.0
+      },
+      "POS": {
+        "mean": 0.168,
+        "std": 0.374,
+        "median": 0.0
+      }
+    },
+    "sports": {
+      "n": 1545,
+      "FA": {
+        "mean": 0.3598,
+        "std": 0.2366,
+        "median": 0.3429
+      },
+      "HR": {
+        "mean": 0.2667,
+        "std": 0.4424,
+        "median": 0.0
+      },
+      "AU": {
+        "mean": 0.4298,
+        "std": 0.4952,
+        "median": 0.0
+      },
+      "CRS": {
+        "mean": 0.343,
+        "std": 0.4749,
+        "median": 0.0
+      },
+      "POS": {
+        "mean": 0.235,
+        "std": 0.4241,
+        "median": 0.0
+      }
+    }
+  },
+  "domain_scenario_anova": {
+    "FA": {
+      "metric": "FA",
+      "factor_a": "domain",
+      "factor_b": "scenario",
+      "main_effect_a": {
+        "SS": 12.147,
+        "df": 6,
+        "F": 28.7607,
+        "p": 0.0,
+        "eta_squared": 0.0173
+      },
+      "main_effect_b": {
+        "SS": 14.3627,
+        "df": 4,
+        "F": 51.0102,
+        "p": 0.0,
+        "eta_squared": 0.0205
+      },
+      "interaction": {
+        "SS": 0.7784,
+        "df": 24,
+        "F": 0.4608,
+        "p": 0.988544,
+        "eta_squared": 0.0011
+      },
+      "residual": {
+        "SS": 674.349,
+        "df": 9580
+      }
+    },
+    "HR": {
+      "metric": "HR",
+      "factor_a": "domain",
+      "factor_b": "scenario",
+      "main_effect_a": {
+        "SS": 14.7514,
+        "df": 6,
+        "F": 12.236,
+        "p": 0.0,
+        "eta_squared": 0.0075
+      },
+      "main_effect_b": {
+        "SS": 18.0982,
+        "df": 4,
+        "F": 22.5181,
+        "p": 0.0,
+        "eta_squared": 0.0092
+      },
+      "interaction": {
+        "SS": 5.2844,
+        "df": 24,
+        "F": 1.0958,
+        "p": 0.338431,
+        "eta_squared": 0.0027
+      },
+      "residual": {
+        "SS": 1924.9065,
+        "df": 9580
+      }
+    },
+    "AU": {
+      "metric": "AU",
+      "factor_a": "domain",
+      "factor_b": "scenario",
+      "main_effect_a": {
+        "SS": 91.3781,
+        "df": 6,
+        "F": 73.0331,
+        "p": 0.0,
+        "eta_squared": 0.0426
+      },
+      "main_effect_b": {
+        "SS": 51.9767,
+        "df": 4,
+        "F": 62.3128,
+        "p": 0.0,
+        "eta_squared": 0.0242
+      },
+      "interaction": {
+        "SS": 4.5061,
+        "df": 24,
+        "F": 0.9004,
+        "p": 0.60258,
+        "eta_squared": 0.0021
+      },
+      "residual": {
+        "SS": 1997.73,
+        "df": 9580
+      }
+    },
+    "CRS": {
+      "metric": "CRS",
+      "factor_a": "domain",
+      "factor_b": "scenario",
+      "main_effect_a": {
+        "SS": 33.7542,
+        "df": 6,
+        "F": 26.3169,
+        "p": 0.0,
+        "eta_squared": 0.0161
+      },
+      "main_effect_b": {
+        "SS": 6.8449,
+        "df": 4,
+        "F": 8.0051,
+        "p": 2e-06,
+        "eta_squared": 0.0033
+      },
+      "interaction": {
+        "SS": 1.6444,
+        "df": 24,
+        "F": 0.3205,
+        "p": 0.999339,
+        "eta_squared": 0.0008
+      },
+      "residual": {
+        "SS": 2047.889,
+        "df": 9580
+      }
+    },
+    "POS": {
+      "metric": "POS",
+      "factor_a": "domain",
+      "factor_b": "scenario",
+      "main_effect_a": {
+        "SS": 11.0157,
+        "df": 6,
+        "F": 13.4124,
+        "p": 0.0,
+        "eta_squared": 0.0082
+      },
+      "main_effect_b": {
+        "SS": 15.3441,
+        "df": 4,
+        "F": 28.024,
+        "p": 0.0,
+        "eta_squared": 0.0114
+      },
+      "interaction": {
+        "SS": 3.369,
+        "df": 24,
+        "F": 1.0255,
+        "p": 0.427269,
+        "eta_squared": 0.0025
+      },
+      "residual": {
+        "SS": 1311.347,
+        "df": 9580
+      }
+    }
+  },
+  "pairwise_domains_FA": [
+    {
+      "pair": "organizations vs people",
+      "mean_diff": 0.0278,
+      "t_stat": 2.5407,
+      "p_raw": 0.01113,
+      "p_bonferroni": 0.233731,
+      "significant": false
+    },
+    {
+      "pair": "organizations vs policy",
+      "mean_diff": 0.0075,
+      "t_stat": 0.6715,
+      "p_raw": 0.501968,
+      "p_bonferroni": 1.0,
+      "significant": false
+    },
+    {
+      "pair": "organizations vs products",
+      "mean_diff": -0.0367,
+      "t_stat": -3.2996,
+      "p_raw": 0.000983,
+      "p_bonferroni": 0.02065,
+      "significant": true
+    },
+    {
+      "pair": "organizations vs science_ai_space",
+      "mean_diff": -0.0095,
+      "t_stat": -0.9135,
+      "p_raw": 0.3611,
+      "p_bonferroni": 1.0,
+      "significant": false
+    },
+    {
+      "pair": "organizations vs science_life_physical",
+      "mean_diff": 0.0596,
+      "t_stat": 5.1301,
+      "p_raw": 0.0,
+      "p_bonferroni": 7e-06,
+      "significant": true
+    },
+    {
+      "pair": "organizations vs sports",
+      "mean_diff": 0.0676,
+      "t_stat": 6.6226,
+      "p_raw": 0.0,
+      "p_bonferroni": 0.0,
+      "significant": true
+    },
+    {
+      "pair": "people vs policy",
+      "mean_diff": -0.0203,
+      "t_stat": -1.9526,
+      "p_raw": 0.050973,
+      "p_bonferroni": 1.0,
+      "significant": false
+    },
+    {
+      "pair": "people vs products",
+      "mean_diff": -0.0645,
+      "t_stat": -6.2275,
+      "p_raw": 0.0,
+      "p_bonferroni": 0.0,
+      "significant": true
+    },
+    {
+      "pair": "people vs science_ai_space",
+      "mean_diff": -0.0373,
+      "t_stat": -3.8761,
+      "p_raw": 0.000108,
+      "p_bonferroni": 0.002273,
+      "significant": true
+    },
+    {
+      "pair": "people vs science_life_physical",
+      "mean_diff": 0.0318,
+      "t_stat": 2.9214,
+      "p_raw": 0.003516,
+      "p_bonferroni": 0.073845,
+      "significant": false
+    },
+    {
+      "pair": "people vs sports",
+      "mean_diff": 0.0398,
+      "t_stat": 4.2517,
+      "p_raw": 2.2e-05,
+      "p_bonferroni": 0.000459,
+      "significant": true
+    },
+    {
+      "pair": "policy vs products",
+      "mean_diff": -0.0442,
+      "t_stat": -4.1736,
+      "p_raw": 3.1e-05,
+      "p_bonferroni": 0.00065,
+      "significant": true
+    },
+    {
+      "pair": "policy vs science_ai_space",
+      "mean_diff": -0.017,
+      "t_stat": -1.7243,
+      "p_raw": 0.08477,
+      "p_bonferroni": 1.0,
+      "significant": false
+    },
+    {
+      "pair": "policy vs science_life_physical",
+      "mean_diff": 0.0521,
+      "t_stat": 4.6909,
+      "p_raw": 3e-06,
+      "p_bonferroni": 6.1e-05,
+      "significant": true
+    },
+    {
+      "pair": "policy vs sports",
+      "mean_diff": 0.0601,
+      "t_stat": 6.2461,
+      "p_raw": 0.0,
+      "p_bonferroni": 0.0,
+      "significant": true
+    },
+    {
+      "pair": "products vs science_ai_space",
+      "mean_diff": 0.0271,
+      "t_stat": 2.7587,
+      "p_raw": 0.005838,
+      "p_bonferroni": 0.1226,
+      "significant": false
+    },
+    {
+      "pair": "products vs science_life_physical",
+      "mean_diff": 0.0962,
+      "t_stat": 8.6997,
+      "p_raw": 0.0,
+      "p_bonferroni": 0.0,
+      "significant": true
+    },
+    {
+      "pair": "products vs sports",
+      "mean_diff": 0.1043,
+      "t_stat": 10.8832,
+      "p_raw": 0.0,
+      "p_bonferroni": 0.0,
+      "significant": true
+    },
+    {
+      "pair": "science_ai_space vs science_life_physical",
+      "mean_diff": 0.0691,
+      "t_stat": 6.6509,
+      "p_raw": 0.0,
+      "p_bonferroni": 0.0,
+      "significant": true
+    },
+    {
+      "pair": "science_ai_space vs sports",
+      "mean_diff": 0.0772,
+      "t_stat": 8.7698,
+      "p_raw": 0.0,
+      "p_bonferroni": 0.0,
+      "significant": true
+    },
+    {
+      "pair": "science_life_physical vs sports",
+      "mean_diff": 0.0081,
+      "t_stat": 0.7939,
+      "p_raw": 0.427368,
+      "p_bonferroni": 1.0,
+      "significant": false
+    }
+  ],
+  "domain_scenario_effect": {
+    "organizations": {
+      "n": 975,
+      "F": 9.2605,
+      "p": 2.4e-07,
+      "scenario_means_FA": {
+        "S1": 0.4503,
+        "S2": 0.3288,
+        "S3": 0.4507,
+        "S4": 0.4542,
+        "S5": 0.4532
+      }
+    },
+    "people": {
+      "n": 1605,
+      "F": 6.5861,
+      "p": 2.957e-05,
+      "scenario_means_FA": {
+        "S1": 0.4163,
+        "S2": 0.3266,
+        "S3": 0.4203,
+        "S4": 0.4144,
+        "S5": 0.4207
+      }
+    },
+    "policy": {
+      "n": 1155,
+      "F": 10.1439,
+      "p": 5e-08,
+      "scenario_means_FA": {
+        "S1": 0.447,
+        "S2": 0.3258,
+        "S3": 0.442,
+        "S4": 0.4404,
+        "S5": 0.4446
+      }
+    },
+    "products": {
+      "n": 1530,
+      "F": 5.3407,
+      "p": 0.00028531,
+      "scenario_means_FA": {
+        "S1": 0.4845,
+        "S2": 0.3964,
+        "S3": 0.4726,
+        "S4": 0.4884,
+        "S5": 0.4787
+      }
+    },
+    "science_ai_space": {
+      "n": 1680,
+      "F": 13.6044,
+      "p": 0.0,
+      "scenario_means_FA": {
+        "S1": 0.4516,
+        "S2": 0.3444,
+        "S3": 0.4632,
+        "S4": 0.4569,
+        "S5": 0.4688
+      }
+    },
+    "science_life_physical": {
+      "n": 1125,
+      "F": 3.6429,
+      "p": 0.00588387,
+      "scenario_means_FA": {
+        "S1": 0.39,
+        "S2": 0.3063,
+        "S3": 0.3787,
+        "S4": 0.3796,
+        "S5": 0.3848
+      }
+    },
+    "sports": {
+      "n": 1545,
+      "F": 6.8862,
+      "p": 1.713e-05,
+      "scenario_means_FA": {
+        "S1": 0.3896,
+        "S2": 0.3003,
+        "S3": 0.3612,
+        "S4": 0.3805,
+        "S5": 0.3675
+      }
+    }
+  },
+  "domain_mechanism_distribution": {
+    "organizations": {
+      "TS": 615,
+      "PO": 195,
+      "C": 150,
+      "KC": 15
+    },
+    "people": {
+      "TS": 915,
+      "PO": 390,
+      "C": 240,
+      "KC": 60
+    },
+    "policy": {
+      "TS": 615,
+      "PO": 285,
+      "C": 195,
+      "KC": 60
+    },
+    "products": {
+      "TS": 855,
+      "PO": 390,
+      "C": 225,
+      "KC": 60
+    },
+    "science_ai_space": {
+      "TS": 1035,
+      "PO": 330,
+      "C": 255,
+      "KC": 60
+    },
+    "science_life_physical": {
+      "TS": 720,
+      "PO": 255,
+      "C": 105,
+      "KC": 45
+    },
+    "sports": {
+      "TS": 930,
+      "PO": 375,
+      "C": 210,
+      "KC": 30
+    }
+  }
+}
